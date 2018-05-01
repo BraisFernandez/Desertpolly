@@ -38,7 +38,6 @@ public class EscenaMenu extends Escena {
      * int anchoPantalla, el ancho de la pantalla
      * int altoPantalla, el alto de la pantalla
      */
-    
 
     public EscenaMenu(int numEscena, Context context,  int anchoPantalla, int altoPantalla) {
         super(numEscena, context, anchoPantalla, altoPantalla);
