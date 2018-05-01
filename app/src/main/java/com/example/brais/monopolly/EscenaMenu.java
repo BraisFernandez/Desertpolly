@@ -29,7 +29,7 @@ public class EscenaMenu extends Escena {
     Paint p, pTitulo;//paints del las opciones y del titulo
     MediaPlayer musicaFondo;
     Bitmap fondoMenu;//la imagen de fondo
-    
+
     /*
      * Constructor para gestionar las propiedades de la escena y pintar los rectángulos
      * parametros: int numEscena, para saber la escena
@@ -38,6 +38,7 @@ public class EscenaMenu extends Escena {
      * int anchoPantalla, el ancho de la pantalla
      * int altoPantalla, el alto de la pantalla
      */
+    
 
     public EscenaMenu(int numEscena, Context context,  int anchoPantalla, int altoPantalla) {
         super(numEscena, context, anchoPantalla, altoPantalla);
