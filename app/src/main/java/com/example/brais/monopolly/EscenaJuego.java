@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 
 //Hereda de Escena bc es una escena hija
@@ -29,7 +28,7 @@ public class EscenaJuego extends Escena {
         pVolver.setAlpha(0);
         pVolver.setTextSize(70);
 
-        imgVolver = BitmapFactory.decodeResource(context.getResources(), R.drawable.backarrow);
+        imgVolver = BitmapFactory.decodeResource(context.getResources(), R.drawable.flechamenu);
         imgVolver = Bitmap.createBitmap(imgVolver);
         imgVolver = Bitmap.createScaledBitmap(imgVolver, getPixels(50), getPixels(50), true);
 
@@ -38,7 +37,7 @@ public class EscenaJuego extends Escena {
     }
 
     //Escena inicial (se le pasa el lienzo (el canvas))
-    public void dibuja(Canvas c) {
+    public void dibujar(Canvas c) {
         super.dibujar(c);
         c.drawBitmap(fondoJuego, 0, 0, null);
         c.drawBitmap(imgVolver, getPixels(0), altoPantalla - getPixels(50), null);

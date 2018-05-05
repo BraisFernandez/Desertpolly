@@ -59,7 +59,7 @@ public class Escena {
         pVolver.setAlpha(0);
         pVolver.setTextSize(70);
 
-        imgVolver = BitmapFactory.decodeResource(context.getResources(), R.drawable.backarrow);
+        imgVolver = BitmapFactory.decodeResource(context.getResources(), R.drawable.flechamenu);
         imgVolver = Bitmap.createBitmap(imgVolver);
         imgVolver = Bitmap.createScaledBitmap(imgVolver, getPixels(50), getPixels(50), true);
 
