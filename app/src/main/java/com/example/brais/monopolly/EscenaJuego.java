@@ -14,6 +14,7 @@ public class EscenaJuego extends Escena {
     Paint pBoton, pVolver;
     Bitmap imgVolver;
     Bitmap fondoJuego;//la imagen de fondo
+    Bitmap tablero;
 
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
@@ -32,8 +33,13 @@ public class EscenaJuego extends Escena {
         imgVolver = Bitmap.createBitmap(imgVolver);
         imgVolver = Bitmap.createScaledBitmap(imgVolver, getPixels(50), getPixels(50), true);
 
-        fondoJuego = BitmapFactory.decodeResource(context.getResources(), R.drawable.monopolyboard);
+        fondoJuego = BitmapFactory.decodeResource(context.getResources(), R.drawable.fondoescena);
         fondoJuego = Bitmap.createScaledBitmap(fondoJuego, anchoPantalla, altoPantalla, true);
+
+        tablero = BitmapFactory.decodeResource(context.getResources(), R.drawable.monopolyboard);
+        tablero = Bitmap.createBitmap(tablero);
+        tablero = Bitmap.createScaledBitmap(tablero, getPixels(355), getPixels(355), true);
+
     }
 
     //Escena inicial (se le pasa el lienzo (el canvas))
@@ -41,6 +47,7 @@ public class EscenaJuego extends Escena {
         super.dibujar(c);
         c.drawBitmap(fondoJuego, 0, 0, null);
         c.drawBitmap(imgVolver, getPixels(0), altoPantalla - getPixels(50), null);
+        c.drawBitmap(tablero, getPixels(2), altoPantalla - getPixels(550), null);
     }
 
     //Metodo encargado de actualizar elementos comunes
