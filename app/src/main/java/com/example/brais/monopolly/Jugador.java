@@ -7,6 +7,8 @@ public class Jugador {
     int posicion;
     int dinero;
 
+
+
     public Jugador(Bitmap imagen, int posicion, int dinero) {
         this.imagen = imagen;
         this.posicion = posicion;

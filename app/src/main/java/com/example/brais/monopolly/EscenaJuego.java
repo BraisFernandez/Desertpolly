@@ -13,12 +13,12 @@ import android.view.MotionEvent;
 //Hereda de Escena bc es una escena hija
 public class EscenaJuego extends Escena {
 
-    Paint pBoton, pNum;
+    Paint pBoton, pTurno, pNum;
     Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2;
     int numAle;
-    Rect rectDados;
+    Rect rectDados, rectCompra, rectTurno;
     boolean tirarDados = false;
-
+    Jugador jugador1;
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
 
@@ -26,6 +26,11 @@ public class EscenaJuego extends Escena {
         pBoton.setColor(Color.RED);
         pBoton.setAlpha(50);
         pBoton.setTextSize(70);
+
+        pTurno=new Paint();
+        pTurno.setColor(Color.BLUE);
+        pTurno.setAlpha(50);
+        pTurno.setTextSize(70);
 
         imgVolver = BitmapFactory.decodeResource(context.getResources(), R.drawable.flechamenu);
         imgVolver = Bitmap.createBitmap(imgVolver);
@@ -47,11 +52,21 @@ public class EscenaJuego extends Escena {
         pNum.setTextSize(getPixels(20));
 
         rectDados = new Rect(getPixels(120), getPixels(200), anchoPantalla - getPixels(120), altoPantalla - getPixels(330));
+        rectCompra = new Rect(getPixels(40), getPixels(520), anchoPantalla - getPixels(220), altoPantalla - getPixels(180));
+        rectTurno = new Rect(getPixels(220), getPixels(520), anchoPantalla - getPixels(40), altoPantalla - getPixels(180));
 
         numAle = numDados();
 
-        Jugador jugador1 = new Jugador(player1, 0, 1000);
+        jugador1 = new Jugador(player1, 0, 1000);
         Jugador jugador2 = new Jugador(player2, 0, 1000);
+
+        player1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.player1);
+        player1 = Bitmap.createBitmap(player1);
+        player1 = Bitmap.createScaledBitmap(player1, getPixels(20), getPixels(20), true);
+
+        player2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.player2);
+        player2 = Bitmap.createBitmap(player2);
+        player2 = Bitmap.createScaledBitmap(player2, getPixels(20), getPixels(20), true);
 
 
     }
@@ -64,9 +79,13 @@ public class EscenaJuego extends Escena {
         c.drawBitmap(tablero, getPixels(2), altoPantalla - getPixels(550), null);
         c.drawBitmap(dados, getPixels(140), altoPantalla - getPixels(425), null);
         c.drawRect(rectDados, pBoton);
-        if(tirarDados)
-        c.drawText(numAle+"", getPixels(160), getPixels(350), pNum);
-
+        c.drawRect(rectCompra, pTurno);
+        c.drawRect(rectTurno, pTurno);
+        if(tirarDados) {
+            c.drawText(numAle + "", getPixels(160), getPixels(350), pNum);
+        }
+        c.drawBitmap(player1, getPixels(10), altoPantalla - getPixels(250), null);
+        c.drawBitmap(player2, getPixels(35), altoPantalla - getPixels(250), null);
     }
 
     public int numDados(){
@@ -75,7 +94,6 @@ public class EscenaJuego extends Escena {
 
     //Metodo encargado de actualizar elementos comunes
     public void actualizarFisica() {
-        //Con el super dibujar primero al clase padre
         super.actualizarFisica();
     }
 
