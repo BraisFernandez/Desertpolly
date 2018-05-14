@@ -7,18 +7,21 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
+
+import java.util.ArrayList;
 
 //Hereda de Escena bc es una escena hija
 public class EscenaJuego extends Escena {
 
     Paint pBoton, pTurno, pNum;
-    Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2;
+    Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2, imgCeldaVerde, imgCeldaSalida;
     int numAle;
     Rect rectDados, rectCompra, rectTurno;
     boolean tirarDados = false;
     Jugador jugador1;
+    ArrayList<Casillas> linea = new ArrayList<>();
+    Casillas esquina;
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
 
@@ -69,23 +72,69 @@ public class EscenaJuego extends Escena {
         player2 = Bitmap.createScaledBitmap(player2, getPixels(20), getPixels(20), true);
 
 
+        imgCeldaSalida = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdasalida);
+        imgCeldaSalida = Bitmap.createBitmap(imgCeldaSalida);
+        imgCeldaSalida = Bitmap.createScaledBitmap(imgCeldaSalida, getPixels(50), getPixels(50), true);
+        Casillas salida = new Casillas(null, 200, 0,true, 100, imgCeldaSalida );
+        this.linea.add(salida);
+
+        for (int i = 1; i < 10; i++) {
+            imgCeldaVerde = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdapeque);
+            imgCeldaVerde = Bitmap.createBitmap(imgCeldaVerde);
+            imgCeldaVerde = Bitmap.createScaledBitmap(imgCeldaVerde, getPixels(50), getPixels(27), true);
+
+
+            Casillas c = new Casillas(null, 100, i,false, 100, imgCeldaVerde);
+            this.linea.add(c);
+
+        }
+
+        esquina = new Casillas(null, 100, 8,false, 100, imgCeldaSalida);
+
     }
 
     //Escena inicial (se le pasa el lienzo (el canvas))
     public void dibujar(Canvas c) {
         super.dibujar(c);
+        float vertical = getPixels(100);
+        float horizontal = getPixels(10);
         c.drawBitmap(fondoJuego, 0, 0, null);
-        c.drawBitmap(imgVolver, getPixels(0), altoPantalla - getPixels(50), null);
-        c.drawBitmap(tablero, getPixels(2), altoPantalla - getPixels(550), null);
-        c.drawBitmap(dados, getPixels(140), altoPantalla - getPixels(425), null);
+//        c.drawBitmap(imgVolver, getPixels(0), altoPantalla - getPixels(50), null);
+//        c.drawBitmap(tablero, getPixels(2), altoPantalla - getPixels(550), null);
+//        c.drawBitmap(dados, getPixels(140), altoPantalla - getPixels(425), null);
         c.drawRect(rectDados, pBoton);
         c.drawRect(rectCompra, pTurno);
         c.drawRect(rectTurno, pTurno);
         if(tirarDados) {
             c.drawText(numAle + "", getPixels(160), getPixels(350), pNum);
         }
-        c.drawBitmap(player1, getPixels(10), altoPantalla - getPixels(250), null);
-        c.drawBitmap(player2, getPixels(35), altoPantalla - getPixels(250), null);
+        c.drawBitmap(this.linea.get(0).imgCelda, horizontal, vertical, null);
+
+        vertical += this.linea.get(0).imgCelda.getHeight();
+        for (int i =1; i <10; i++ ){
+//            if(i == 0){
+//                //c.drawBitmap(this.linea.get(i).imgCelda, getPixels(10), esquina.imgCelda.getHeight()+ i*this.linea.get(i).imgCelda.getHeight()-getPixels(110), null);
+//            }else if(i < 10){
+//            if(i == 1){
+//                c.drawBitmap(this.linea.get(i).imgCelda, getPixels(10), this.linea.get(0).imgCelda.getHeight() + this.linea.get(i).imgCelda.getHeight(), null);
+//
+//            }
+
+            c.drawBitmap(this.linea.get(i).imgCelda, horizontal, vertical, null);
+            vertical += this.linea.get(i).imgCelda.getHeight();
+            //}
+        }
+        //vertical -= this.linea.get(1).imgCelda.getHeight();
+        c.drawBitmap(this.linea.get(0).imgCelda, horizontal, vertical, null);
+        for (int i =1; i < linea.size(); i++ ) {
+
+            //c.drawBitmap(this.linea.get(i).imgCelda, getPixels(10), this.linea.get(0).imgCelda.getHeight()+ getPixels(100) + (i-1)*this.linea.get(i).imgCelda.getHeight(), null);
+
+        }
+
+//        c.drawBitmap(player1, getPixels(10), altoPantalla - getPixels(250), null);
+//        c.drawBitmap(player2, getPixels(35), altoPantalla - getPixels(250), null);
+
     }
 
     public int numDados(){
