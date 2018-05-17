@@ -92,7 +92,7 @@ public class EscenaMenu extends Escena {
         //c.drawBitmap(fondoMenu, 0, 0, null);
         c.drawBitmap(fondoMenu, 0, 0, null);
         //Dibujamos los rectángulos
-        c.drawText("Battle Monster", anchoPantalla / 2, getPixels(75), pTitulo);
+        c.drawText("Monopoly", anchoPantalla / 2, getPixels(75), pTitulo);
         c.drawRect(btnJugar, pBoton);
         c.drawRect(btnLogros, pBoton);
         c.drawRect(btnRecords, pBoton);
