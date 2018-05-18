@@ -18,14 +18,15 @@ public class EscenaJuego extends Escena {
     Paint pBoton, pTurno, pNum;
     Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2, imgCeldaVerde, imgCeldaSalida, imgTrebol, imgGatito, imgCeldaAzulOs, imgCeldaAzulCl,
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
-    int numAle;
+    int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35);
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false;
-    Jugador jugador1;
+    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, movVertiPlayer1 = true, bajando = true, subiendo = false, derecha = true;
+    Jugador jugador1 = new Jugador(player1, 0, 1000);
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
+
 
         pBoton=new Paint();
         pBoton.setColor(Color.RED);
@@ -62,7 +63,6 @@ public class EscenaJuego extends Escena {
 
         numAle = numDados();
 
-        jugador1 = new Jugador(player1, 0, 1000);
         Jugador jugador2 = new Jugador(player2, 0, 1000);
 
         player1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.player1);
@@ -231,6 +231,9 @@ public class EscenaJuego extends Escena {
     //Escena inicial (se le pasa el lienzo (el canvas))
     public void dibujar(Canvas c) {
         super.dibujar(c);
+
+        Movimiento mov = new Movimiento(1, context, anchoPantalla, altoPantalla);
+
         float vertical = getPixels(80);
         float horizontal = getPixels(10);
         c.drawBitmap(fondoJuego, 0, 0, null);
@@ -274,8 +277,63 @@ public class EscenaJuego extends Escena {
             c.drawBitmap(this.linea.get(i).RotateBitmap((this.linea.get(i).imgCelda), 90), horizontal, vertical, null);
 
         }
-        c.drawBitmap(player1, getPixels(10), getPixels(110), null);
-        c.drawBitmap(player2, getPixels(35), getPixels(110), null);
+        //Log.i("NOES","POSICION: " + posVertPlayer1);
+        if(player1turn){
+            if(!movHorizPlayer1){
+                if(bajando) {
+                    posVertPlayer1 += mov.mover(numAle);
+                }else {
+                        Log.i("EEEEEEEEEEEEEEEES", "AQUIIIIIIIIIIIIIIIIIII: " + posVertPlayer1);
+                        posVertPlayer1 -= mov.mover(numAle);
+                }
+                //jugador1.setPosicion(posVertPlayer1);
+            }else {
+
+                if(derecha) {
+                    posHorizPlayer1 += mov.mover(numAle);
+                }else {
+                    posHorizPlayer1 -= mov.mover(numAle);
+                }
+            }
+            player1turn = false;
+
+            if (posVertPlayer1 >= 760) {
+                posHorizPlayer1 += posVertPlayer1 - 760;
+                posVertPlayer1 = 760;
+                derecha = true;
+            }
+            if(posVertPlayer1 <= 220){
+                Log.i("EOOOOOOOOOOOO","POSICIONVERTICAL: " + posVertPlayer1);
+                posHorizPlayer1 -= posVertPlayer1 - 220;
+                posVertPlayer1 = 220;
+                derecha = false;
+            }
+            if(posHorizPlayer1 >= 610){
+                posVertPlayer1 -= posHorizPlayer1 - 610;
+                posHorizPlayer1 = 610;
+                bajando = false;
+                subiendo = true;
+            }else{
+                bajando = true;
+                subiendo = false;
+            }
+            if(posVertPlayer1 < 760 ){
+                movHorizPlayer1 = false;
+                movVertiPlayer1 = true;
+            }else if(posVertPlayer1 >= 760){
+                movHorizPlayer1 = true;
+                movVertiPlayer1 = false;
+            }else if(posVertPlayer1 > 220){
+                movHorizPlayer1 = false;
+                movVertiPlayer1 = true;
+            }else if(posVertPlayer1 <= 220){
+                movHorizPlayer1 = true;
+                movVertiPlayer1 = false;
+            }
+        }
+        //Log.i("EOOOOOOOOOOOO","POSICION2: " + posVertPlayer1);
+        c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
+        c.drawBitmap(player2, getPixels(10), getPixels(110), null);
 
     }
 
@@ -308,6 +366,7 @@ public class EscenaJuego extends Escena {
                 if (rectDados.contains((int) event.getX(), (int) event.getY())) {
                     tirarDados = true;
                     numAle = numDados();
+                    player1turn = true;
                 }
                 break;
         }
