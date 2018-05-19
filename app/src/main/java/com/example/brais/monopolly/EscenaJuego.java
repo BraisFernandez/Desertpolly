@@ -20,7 +20,8 @@ public class EscenaJuego extends Escena {
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35);
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, movVertiPlayer1 = true, bajando = true, subiendo = false, derecha = true;
+    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, movVertiPlayer1 = true, bajando = true, subiendo = false, derecha = true
+            ,parar = false;
     Jugador jugador1 = new Jugador(player1, 0, 1000);
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
@@ -281,10 +282,20 @@ public class EscenaJuego extends Escena {
         if(player1turn){
             if(!movHorizPlayer1){
                 if(bajando) {
-                    posVertPlayer1 += mov.mover(numAle);
+                    if(!parar) {
+                        posVertPlayer1 += mov.mover(numAle);
+                    }
                 }else {
+
+                    if(!parar) {
                         Log.i("EEEEEEEEEEEEEEEES", "AQUIIIIIIIIIIIIIIIIIII: " + posVertPlayer1);
                         posVertPlayer1 -= mov.mover(numAle);
+
+                    }else {
+                        posVertPlayer1 = 220;
+                        posHorizPlayer1 -= posVertPlayer1 - 220;
+                        posHorizPlayer1-= mov.mover(numAle);
+                    }
                 }
                 //jugador1.setPosicion(posVertPlayer1);
             }else {
@@ -305,14 +316,20 @@ public class EscenaJuego extends Escena {
             if(posVertPlayer1 <= 220){
                 Log.i("EOOOOOOOOOOOO","POSICIONVERTICAL: " + posVertPlayer1);
                 posHorizPlayer1 -= posVertPlayer1 - 220;
+                posHorizPlayer1 -= mov.mover(numAle);
                 posVertPlayer1 = 220;
                 derecha = false;
+                parar = true;
             }
             if(posHorizPlayer1 >= 610){
-                posVertPlayer1 -= posHorizPlayer1 - 610;
+                if(!parar) {
+                    posVertPlayer1 -= posHorizPlayer1 - 610;
+                }
                 posHorizPlayer1 = 610;
                 bajando = false;
                 subiendo = true;
+            }else if (posHorizPlayer1 <= 70){
+                posHorizPlayer1 = 70;
             }else{
                 bajando = true;
                 subiendo = false;
@@ -326,9 +343,11 @@ public class EscenaJuego extends Escena {
             }else if(posVertPlayer1 > 220){
                 movHorizPlayer1 = false;
                 movVertiPlayer1 = true;
+                parar = false;
             }else if(posVertPlayer1 <= 220){
                 movHorizPlayer1 = true;
                 movVertiPlayer1 = false;
+                parar = true;
             }
         }
         //Log.i("EOOOOOOOOOOOO","POSICION2: " + posVertPlayer1);
