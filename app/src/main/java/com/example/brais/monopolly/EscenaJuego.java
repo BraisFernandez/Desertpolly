@@ -20,7 +20,7 @@ public class EscenaJuego extends Escena {
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35);
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, bajando = true, subiendo = false, derecha = true, dVertical = true, subir = true, parar = true;
+    boolean tirarDados = false, player1turn = false, dVertical = true, subir = true;
     Jugador jugador1 = new Jugador(player1, 0, 1000);
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
@@ -298,30 +298,28 @@ public class EscenaJuego extends Escena {
             }
             player1turn = false;
         }
-        if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 <= getPixels(35)) {
+        if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 <= getPixels(35)){
             dVertical = true;
             subir = false;
             posVertPlayer1 -= posHorizPlayer1 - getPixels(35);
             posHorizPlayer1 = getPixels(35);
-        }else
-        if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 <= getPixels(35)){
+        }else if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 <= getPixels(35)){
             dVertical = false;
             subir = false;
-            posHorizPlayer1 -= posVertPlayer1 - getPixels(380);
+            posHorizPlayer1 += posVertPlayer1 - getPixels(380);
             posVertPlayer1 = getPixels(380);
-        }else
-        if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 >= getPixels(305)){
+        }else if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 >= getPixels(305)){
             dVertical = true;
             subir = true;
             posVertPlayer1 -= posHorizPlayer1 - getPixels(305);
             posHorizPlayer1 = getPixels(305);
-        }else
-        if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 >= getPixels(305)){
+        }else if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 >= getPixels(305)){
             dVertical = false;
             subir = true;
-            posHorizPlayer1 -= posVertPlayer1 - getPixels(110);
+            posHorizPlayer1 += posVertPlayer1 - getPixels(110);
             posVertPlayer1 = getPixels(110);
         }
+
         c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
         c.drawBitmap(player2, getPixels(10), getPixels(110), null);
 
