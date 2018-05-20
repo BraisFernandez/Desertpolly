@@ -20,8 +20,7 @@ public class EscenaJuego extends Escena {
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35);
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, movVertiPlayer1 = true, bajando = true, subiendo = false, derecha = true
-            ,parar = false;
+    boolean tirarDados = false, player1turn = false, movHorizPlayer1 = false, bajando = true, subiendo = false, derecha = true, dVertical = true, subir = true, parar = true;
     Jugador jugador1 = new Jugador(player1, 0, 1000);
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
@@ -280,77 +279,49 @@ public class EscenaJuego extends Escena {
         }
         //Log.i("NOES","POSICION: " + posVertPlayer1);
         if(player1turn){
-            if(!movHorizPlayer1){
-                if(bajando) {
-                    if(!parar) {
-                        posVertPlayer1 += mov.mover(numAle);
-                    }
+            if(dVertical){
+                if(subir){
+                    posVertPlayer1 -= mov.mover(numAle);
+                    //posVertPlayer1 -= posHorizPlayer1 - getPixels(305);
                 }else {
-
-                    if(!parar) {
-                        Log.i("EEEEEEEEEEEEEEEES", "AQUIIIIIIIIIIIIIIIIIII: " + posVertPlayer1);
-                        posVertPlayer1 -= mov.mover(numAle);
-
-                    }else {
-                        posVertPlayer1 = 220;
-                        posHorizPlayer1 -= posVertPlayer1 - 220;
-                        posHorizPlayer1-= mov.mover(numAle);
-                    }
+                    posVertPlayer1 += mov.mover(numAle);
+                    //posVertPlayer1 -= posHorizPlayer1 - getPixels(35);
                 }
-                //jugador1.setPosicion(posVertPlayer1);
             }else {
-
-                if(derecha) {
-                    posHorizPlayer1 += mov.mover(numAle);
-                }else {
+                if(subir){
                     posHorizPlayer1 -= mov.mover(numAle);
+                    //posHorizPlayer1 -= posVertPlayer1 - getPixels(110);
+                }else {
+                    posHorizPlayer1 += mov.mover(numAle);
+                    //posHorizPlayer1 -= posVertPlayer1 - getPixels(380);
                 }
             }
             player1turn = false;
-
-            if (posVertPlayer1 >= 760) {
-                posHorizPlayer1 += posVertPlayer1 - 760;
-                posVertPlayer1 = 760;
-                derecha = true;
-            }
-            if(posVertPlayer1 <= 220){
-                Log.i("EOOOOOOOOOOOO","POSICIONVERTICAL: " + posVertPlayer1);
-                posHorizPlayer1 -= posVertPlayer1 - 220;
-                posHorizPlayer1 -= mov.mover(numAle);
-                posVertPlayer1 = 220;
-                derecha = false;
-                parar = true;
-            }
-            if(posHorizPlayer1 >= 610){
-                if(!parar) {
-                    posVertPlayer1 -= posHorizPlayer1 - 610;
-                }
-                posHorizPlayer1 = 610;
-                bajando = false;
-                subiendo = true;
-            }else if (posHorizPlayer1 <= 70){
-                posHorizPlayer1 = 70;
-            }else{
-                bajando = true;
-                subiendo = false;
-            }
-            if(posVertPlayer1 < 760 ){
-                movHorizPlayer1 = false;
-                movVertiPlayer1 = true;
-            }else if(posVertPlayer1 >= 760){
-                movHorizPlayer1 = true;
-                movVertiPlayer1 = false;
-            }else if(posVertPlayer1 > 220){
-                movHorizPlayer1 = false;
-                movVertiPlayer1 = true;
-                parar = false;
-            }else if(posVertPlayer1 <= 220){
-                movHorizPlayer1 = true;
-                movVertiPlayer1 = false;
-                parar = true;
-            }
         }
-        //Log.i("EOOOOOOOOOOOO","POSICION2: " + posVertPlayer1);
+        if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 <= getPixels(35)) {
+            dVertical = true;
+            subir = false;
+            posVertPlayer1 -= posHorizPlayer1 - getPixels(35);
+            posHorizPlayer1 = getPixels(35);
+        }else
+        if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 <= getPixels(35)){
+            dVertical = false;
+            subir = false;
+            posHorizPlayer1 -= posVertPlayer1 - getPixels(380);
+            posVertPlayer1 = getPixels(380);
+        }else
+        if(posVertPlayer1 >= getPixels(380) && posHorizPlayer1 >= getPixels(305)){
+            dVertical = true;
+            subir = true;
+            posVertPlayer1 -= posHorizPlayer1 - getPixels(305);
+            posHorizPlayer1 = getPixels(305);
+        }else
+        if(posVertPlayer1 <= getPixels(110) && posHorizPlayer1 >= getPixels(305)){
+            dVertical = false;
+            subir = true;
+            posHorizPlayer1 -= posVertPlayer1 - getPixels(110);
+            posVertPlayer1 = getPixels(110);
+        }
         c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
         c.drawBitmap(player2, getPixels(10), getPixels(110), null);
 
