@@ -12,13 +12,29 @@ public class Casillas {
     public int tamaño;
     public Bitmap imgCelda;
 
-    public Casillas(Jugador dueño, int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda) {
-        this.dueño = dueño;
+    public Casillas(int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda) {
+        this.dueño = null;
         this.precio = precio;
         this.numero = numero;
         this.especiales = especiales;
         this.tamaño = tamaño;
         this.imgCelda = imgCelda;
+    }
+
+    public Jugador getDueño() {
+        return dueño;
+    }
+
+    public void setDueño(Jugador dueño) {
+        this.dueño = dueño;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 
     public Bitmap RotateBitmap(Bitmap source, float angle) {

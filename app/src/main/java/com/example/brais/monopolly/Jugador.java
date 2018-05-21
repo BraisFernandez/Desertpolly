@@ -6,13 +6,22 @@ public class Jugador {
     Bitmap imagen;
     int posicion;
     int dinero;
+    boolean tengoTurno;
 
 
-
-    public Jugador(Bitmap imagen, int posicion, int dinero) {
+    public Jugador(Bitmap imagen, int posicion, int dinero, boolean tengoTurno) {
         this.imagen = imagen;
         this.posicion = posicion;
         this.dinero = dinero;
+        this.tengoTurno = tengoTurno;
+    }
+
+    public boolean isTengoTurno() {
+        return tengoTurno;
+    }
+
+    public void setTengoTurno(boolean tengoTurno) {
+        this.tengoTurno = tengoTurno;
     }
 
     public Bitmap getImagen() {
