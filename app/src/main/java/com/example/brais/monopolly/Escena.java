@@ -31,14 +31,13 @@ public class Escena {
     boolean sonido = true, vibracion = true, primeraVez = true;//booleanos sonido, bibracion y primeraVez
     Bitmap imgVolver;
 
-    /*
+    /**
      * Constructor de Escena que da valor a los paints, situa botones...
-     * parametros: int numEscena, para saber la escena
-     * Context context, el contexto de escena
-     * int colorFondo, el fondo de la escena
-     * int anchoPantalla, el ancho de la pantalla
-     * int altoPantalla, el alto de la pantalla
-     * */
+     * @param numEscena
+     * @param context
+     * @param anchoPantalla
+     * @param altoPantalla
+     */
     public Escena(int numEscena, Context context, int anchoPantalla, int altoPantalla) {
 
         this.numEscena=numEscena;
@@ -67,10 +66,11 @@ public class Escena {
 
 
     }
-    /*
+
+    /**
      * Metodo dibujar que dibuja el boton volver
-     * Paramentro: Canvas c, lienzo del que nos valemos para dibujar por pantalla
-     * */
+     * @param c
+     */
     public void dibujar(Canvas c){
         //c.drawColor(colorFondo);
         //c.drawText("Escena "+numEscena,getPixels(10),getPixels(60),pTexto);

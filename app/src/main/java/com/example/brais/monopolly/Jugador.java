@@ -2,13 +2,22 @@ package com.example.brais.monopolly;
 
 import android.graphics.Bitmap;
 
+/**
+ * Clase jugador donde gestiono los datos necesarios de los jugadores
+ */
 public class Jugador {
     Bitmap imagen;
     int posicion;
     int dinero;
     boolean tengoTurno;
 
-
+    /**
+     * Constructor de la clase Jugador
+     * @param imagen
+     * @param posicion
+     * @param dinero
+     * @param tengoTurno
+     */
     public Jugador(Bitmap imagen, int posicion, int dinero, boolean tengoTurno) {
         this.imagen = imagen;
         this.posicion = posicion;

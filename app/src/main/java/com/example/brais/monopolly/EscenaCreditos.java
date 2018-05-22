@@ -8,6 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+/**
+ * Clase EscenaCreditos que hereda de escena y muestra los créditos del juego.
+ */
 public class EscenaCreditos extends Escena {
 
     Bitmap fondoescena;//la imagen de fondo
@@ -18,21 +21,36 @@ public class EscenaCreditos extends Escena {
     String[] cads;//vector cads para guardar el texto de agradecimientos
     int separacion = getPixels(40);//int separacion para establecer la separacion entre texto
 
+    /**
+     * Constructor de la clase EscenaCreditos
+     * @param numEscena
+     * @param context
+     * @param anchoPantalla
+     * @param altoPantalla
+     */
     public EscenaCreditos(int numEscena, Context context, int anchoPantalla, int altoPantalla) {
         super(numEscena, context, anchoPantalla, altoPantalla);
 
         fondoescena = BitmapFactory.decodeResource(context.getResources(), R.drawable.fondoescena);
         fondoescena = Bitmap.createScaledBitmap(fondoescena, anchoPantalla, altoPantalla, true);
-
+        String cred = "Agradecimientos##Por las imágenes##A Freepik##La flecha de retorno#" +
+                "Los dados#El icono del juego#La casilla de salida##A FreeImages##" +
+                "El fondo de las escenas##A Vecteezy##La celda policía#La celda cárcel#La celda trébol#" +
+                "#A Flaticon##La casilla gato#Los personajes##A GabiGa##El nombre del juego#";
         creditos = new Paint();
         creditos.setColor(Color.YELLOW);
         creditos.setTextSize(getPixels(30));
         creditos.setTextAlign(Paint.Align.CENTER);
-        cads = ("Agradecimientos#Por la imagen").split("#");
+        cads = cred.split("#");
         y = altoPantalla + 100;
         tacutal = System.currentTimeMillis();
         tickTexto = 1;
     }
+
+    /**
+     * Método dibujar, que pinta por pantalla constantemente los créditos del juego
+     * @param c
+     */
     public void dibujar(Canvas c) {
         super.dibujar(c);
         c.drawBitmap(fondoescena, 0, 0, null);
@@ -45,6 +63,10 @@ public class EscenaCreditos extends Escena {
             }
         }
     }
+
+    /**
+     * Nétodo acualizaFisica que actualiza constantemente la física del juego
+     */
     public void actualizarFisica() {
         if (System.currentTimeMillis() - tacutal > tickTexto) {
             y -= getPixels(1);
@@ -52,6 +74,12 @@ public class EscenaCreditos extends Escena {
         }
         super.actualizarFisica();
     }
+
+    /**
+     * Método que gestiona las pulsaciones del usuario en la pantalla.
+     * @param event
+     * @return
+     */
     public int onTouchEvent(MotionEvent event) {
         //Llama al control de pulsaciones de la clase padre
         int nuevaEscena=super.onTouchEvent(event);

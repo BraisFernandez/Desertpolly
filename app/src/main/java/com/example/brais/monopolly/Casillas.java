@@ -3,6 +3,9 @@ package com.example.brais.monopolly;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 
+/**
+ * Clase casillas, donde gestiono todas las casillas del tablero
+ */
 public class Casillas {
 
     public Jugador dueño;
@@ -13,6 +16,15 @@ public class Casillas {
     public Bitmap imgCelda;
     public int cobrar;
 
+    /**
+     * Constructor de la clase Casillas
+     * @param precio
+     * @param numero
+     * @param especiales
+     * @param tamaño
+     * @param imgCelda
+     * @param cobrar
+     */
     public Casillas(int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda, int cobrar) {
         this.dueño = null;
         this.cobrar = cobrar;

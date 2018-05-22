@@ -9,16 +9,22 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 
+import static android.content.Context.VIBRATOR_SERVICE;
+
+/**
+ * EscenaMenu, hereda de escena. Escena donde se organiza las distintas escenas del juego.
+ */
 public class EscenaMenu extends Escena {
 
-    Rect btnJugar, btnLogros, btnRecords, btnOpc, btnCreditos, btnAyuda, btnSalir;//Creación de rectángulos para gestionar el cambio de escenas
+    Rect btnJugar,/* btnLogros, btnRecords, btnOpc,*/ btnCreditos, btnAyuda, btnSalir;//Creación de rectángulos para gestionar el cambio de escenas
     Typeface faw;//tipo de fuente
     Paint p, pTitulo;//paints del las opciones y del titulo
     MediaPlayer musicaFondo;
     Bitmap fondoMenu;//la imagen de fondo
-
+    Vibrator mVibrator;
     /*
      * Constructor para gestionar las propiedades de la escena y pintar los rectángulos
      * parametros: int numEscena, para saber la escena
@@ -28,8 +34,16 @@ public class EscenaMenu extends Escena {
      * int altoPantalla, el alto de la pantalla
      */
 
+    /**
+     * Constructor de EscenaMenu donde se organiza el acceso a las diferentes escenas
+     * @param numEscena
+     * @param context
+     * @param anchoPantalla
+     * @param altoPantalla
+     */
     public EscenaMenu(int numEscena, Context context,  int anchoPantalla, int altoPantalla) {
         super(numEscena, context, anchoPantalla, altoPantalla);
+        mVibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         faw = Typeface.createFromAsset(context.getResources().getAssets(), "tipografia.ttf");
         p = new Paint();
         p.setTypeface(faw);
@@ -54,24 +68,26 @@ public class EscenaMenu extends Escena {
         int tamano = (altoPantalla / 3) - getPixels(50);
         btnJugar = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
         tamano += alto + separacion;
-        btnLogros = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
-        tamano += alto + separacion;
-        btnRecords = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
-        tamano += alto + separacion;
-        btnOpc = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
-        tamano += alto + separacion;
+//        btnLogros = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
+//        tamano += alto + separacion;
+//        btnRecords = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
+//        tamano += alto + separacion;
+//        btnOpc = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
+//        tamano += alto + separacion;
         btnCreditos = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
         tamano += alto + separacion;
         btnAyuda = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
-        tamano += alto + separacion;
-        btnSalir = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla / 2) + getPixels(100), tamano + alto);
+        tamano += (alto + separacion)*4;
+        btnSalir = new Rect((anchoPantalla / 2) - getPixels(100), tamano, (anchoPantalla) + getPixels(100), tamano + alto);
     }
 
-    /*
-     * Metodo dibujar que dibuja de forma constante en la pantalla mediante un lienzo (Canvas)
+
+    /**
+     *  Metodo dibujar que dibuja de forma constante en la pantalla mediante un lienzo (Canvas)
      * Parametros: Canvas c, lienzo donde dibujamos y mosntramos por pantalla
      * Return: void
-     * */
+     * @param c
+     */
     public void dibujar(Canvas c) {
         super.dibujar(c);
         int alto = getPixels(40);
@@ -83,9 +99,9 @@ public class EscenaMenu extends Escena {
         //Dibujamos los rectángulos
         c.drawText("Property War", anchoPantalla / 2, getPixels(75), pTitulo);
         c.drawRect(btnJugar, pBoton);
-        c.drawRect(btnLogros, pBoton);
-        c.drawRect(btnRecords, pBoton);
-        c.drawRect(btnOpc, pBoton);
+//        c.drawRect(btnLogros, pBoton);
+//        c.drawRect(btnRecords, pBoton);
+//        c.drawRect(btnOpc, pBoton);
         c.drawRect(btnCreditos, pBoton);
         c.drawRect(btnAyuda, pBoton);
         c.drawRect(btnSalir, pBoton);
@@ -93,17 +109,17 @@ public class EscenaMenu extends Escena {
 
         p.setTextAlign(Paint.Align.CENTER);
         c.drawText("Jugar", anchoPantalla / 2, coory, p);
-        coory += alto + separacion;
-        c.drawText("EscenaLogros", anchoPantalla / 2, coory, p);
-        coory += alto + separacion;
-        c.drawText("EscenaRecords", anchoPantalla / 2, coory, p);
-        coory += alto + separacion;
-        c.drawText("Opciones", anchoPantalla / 2, coory, p);
+//        coory += alto + separacion;
+//        c.drawText("EscenaLogros", anchoPantalla / 2, coory, p);
+//        coory += alto + separacion;
+//        c.drawText("EscenaRecords", anchoPantalla / 2, coory, p);
+//        coory += alto + separacion;
+//        c.drawText("Opciones", anchoPantalla / 2, coory, p);
         coory += alto + separacion;
         c.drawText("EscenaCreditos", anchoPantalla / 2, coory, p);
         coory += alto + separacion;
         c.drawText("EscenaAyuda", anchoPantalla / 2, coory, p);
-        coory += alto + separacion;
+        coory += (alto + separacion)*4;
         c.drawText("Salir", anchoPantalla / 2, coory, p);
 
         if (numEscena > 1) {
@@ -119,11 +135,11 @@ public class EscenaMenu extends Escena {
         super.actualizarFisica();
     }
 
-    /*
+    /**
      * Metodo onTouchEvent que gestiona las pulsaciones del usuario en cada opcion del menu
-     * Parametro: MotionEvent even, que nos sirve para localizar el evento de la pulsacion del usuario en la pantalla
-     * Return: int
-     * */
+     * @param event
+     * @return
+     */
     public int onTouchEvent(MotionEvent event) {
         int accion = event.getAction();
         switch (accion) {
@@ -135,17 +151,18 @@ public class EscenaMenu extends Escena {
                     return 1;
                 }
                 if (btnJugar.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
+                    mVibrator.vibrate(300);
                     return 2;
                 }
-                if (btnLogros.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
-                    return 3;
-                }
-                if (btnRecords.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
-                    return 4;
-                }
-                if (btnOpc.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
-                    return 5;
-                }
+//                if (btnLogros.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
+//                    return 3;
+//                }
+//                if (btnRecords.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
+//                    return 4;
+//                }
+//                if (btnOpc.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
+//                    return 5;
+//                }
                 if (btnCreditos.contains((int) event.getX(), (int) event.getY()) && numEscena <= 7) {
                     return 6;
                 }

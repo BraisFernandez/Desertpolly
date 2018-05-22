@@ -12,15 +12,19 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-//Hereda de Escena bc es una escena hija
+
+/**
+* Clase EscenaJuego que hereda de Escena. Esta es la clase donde organizo las casillas del tablero y añado sus posiciones en una colección.
+* */
 public class EscenaJuego extends Escena {
     Paint pBoton, pTurno, pNum, pDinero, pCompra;
     Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2, imgCeldaVerde, imgCeldaSalida, imgTrebol, imgGatito, imgCeldaAzulOs, imgCeldaAzulCl,
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35), posVertPlayer2 = getPixels(110), posHorizPlayer2 = getPixels(35),
-            casillaPlayer1 = 0, casillaPlayer2 = 0;
+            casillaPlayer1 = 0, casillaPlayer2 = 0, llervarseDinero = 0;
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false, player1turn = false,dVertical = true, dVerticalPlayer2 = true, subir = true, subirPlayer2 = true, conDados = true;
+    boolean tirarDados = false, player1turn = false,dVertical = true, dVerticalPlayer2 = true, subir = true, subirPlayer2 = true, conDados = true, alacarcel = false, entrando = false,
+    ganandoDinero = false, perdiendoDinero = false;
     Jugador jugador1 = new Jugador(player1, 0, 1000, true);
     Jugador jugador2 = new Jugador(player2, 0, 1000, false);
     ArrayList<Casillas> linea = new ArrayList<>();
@@ -157,29 +161,29 @@ public class EscenaJuego extends Escena {
                 this.linea.add(c);
             }
            else if(i == 6 || i == 8 || i == 9){
-                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 0);//50
+                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);//50
                 this.linea.add(c);
             }else if(i == 11 || i == 12 || i == 14){
-                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 0);//75
+                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);//75
                 this.linea.add(c);
             }else if(i == 16 || i == 17 || i == 19){
-                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 0);//100
+                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);//100
                 this.linea.add(c);
             }
             else if(i == 21 || i == 23 || i == 24){
-                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 0);//125
+                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);//125
                 this.linea.add(c);
             }
             else if(i == 26 || i == 27 || i == 29){
-                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 0);//150
+                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 150);//150
                 this.linea.add(c);
             }
             else if(i == 31 || i == 32 || i == 34){
-                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 0);//175
+                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 175);//175
                 this.linea.add(c);
             }
             else if(i == 37 || i == 39){
-                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 0);//200
+                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 200);//200
                 this.linea.add(c);
             }
             else if(i == 10) {
@@ -235,7 +239,10 @@ public class EscenaJuego extends Escena {
 
     }
     Movimiento mov = new Movimiento(1, context, anchoPantalla, altoPantalla);
-    //Escena inicial (se le pasa el lienzo (el canvas))
+    /**
+     * Método dibujar en el que muestro por pantalla todos los elementos de la escena, realizo una creación dinámica del tablero y llamo a las funciones que organizan el movimiento
+     * de los personajes y el funcionamiento del juego
+     */
     public void dibujar(Canvas c) {
         super.dibujar(c);
         float vertical = getPixels(80);
@@ -252,6 +259,7 @@ public class EscenaJuego extends Escena {
         c.drawText("Turno", getPixels(245), getPixels(510), pCompra);
         c.drawText("Player 1: " + jugador1.dinero + " €", getPixels(20), getPixels(50), pDinero);
         c.drawText("Player 2: " + jugador2.dinero + " €", getPixels(180), getPixels(50), pDinero);
+
         if (tirarDados) {
             c.drawText(numAle + "", getPixels(160), getPixels(350), pNum);
         }
@@ -289,25 +297,57 @@ public class EscenaJuego extends Escena {
         //Log.i("NOES","POSICION: " + posVertPlayer1);
         turnoPlayer1();
         turnoPlayer2();
+        if(alacarcel){
+            c.drawText("A la carcel!! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            alacarcel = false;
+        }
+        if(entrando){
+            c.drawText("Sumas 200€ !! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            entrando = false;
+        }
+        if(ganandoDinero){
+            Log.i("BOOLEANA","BOOLEANA"+ ganandoDinero);
+            c.drawText("Sumas 50€ :) ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            ganandoDinero = false;
+        }
+        if(perdiendoDinero){
+            c.drawText("Pierdes 50€ :( ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            perdiendoDinero = false;
+        }
+        if(jugador1.getDinero() <= 0){
+            c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+        }
+        if(jugador2.getDinero() <= 0){
+            c.drawText("¡¡¡ Ha ganado el Jugador 1 !!!", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+        }
         c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
         c.drawBitmap(player2, posHorizPlayer2, posVertPlayer2, null);
 
     }
+    /**
+     * Método llemarMeta el cual suma 200€ al jugador correspondiente cuando llega a la casilla principal.
+     */
+
     public void llegarMeta(){
         if(jugador1.isTengoTurno()) {
             if (casillaPlayer1 > (casillaPlayer1 + numAle) % 40) {
                 jugador1.setDinero(jugador1.getDinero() + 200);
-                Log.i("DENTRO IF 1", "Casilla: " + casillaPlayer1 + " de: " + linea.size());
+                entrando = true;
+                //Log.i("DENTRO IF 1", "Casilla: " + casillaPlayer1 + " de: " + linea.size());
             }
         }
         else {
             if (casillaPlayer2 > (casillaPlayer2 + numAle) % 40) {
                 jugador2.setDinero(jugador2.getDinero() + 200);
-                Log.i("DENTRO IF 2", "Casilla: " + casillaPlayer2 + " de: " + linea.size());
+                entrando = true;
+                //Log.i("DENTRO IF 2", "Casilla: " + casillaPlayer2 + " de: " + linea.size());
             }
         }
     }
 
+    /**
+     *Método turnoPLayer1 que organiza el movimiento del jugador 1
+     */
     public void turnoPlayer1(){
         if (jugador1.isTengoTurno())
         {
@@ -326,8 +366,9 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 llegarMeta();
-                casillasEspecialesPlayer1();
+
                 casillaPlayer1 = (casillaPlayer1 + numAle) % 40;
+
                 if (cambiarPosicion()) {
                     casillaPlayer1 = (10) % 40;
                     //casillaPlayer1 = (casillaPlayer1 + 3) % 40;
@@ -368,8 +409,14 @@ public class EscenaJuego extends Escena {
                 posHorizPlayer1 += posVertPlayer1 - getPixels(110);
                 posVertPlayer1 = getPixels(110);
             }
+            pagarCasillaJugador1(casillaPlayer1);
+            casillasEspecialesPlayer1();
+            Log.i("DUEÑO","TURNOJUGADOR1" + this.linea.get(casillaPlayer1).getDueño());
         }
     }
+    /**
+     * Método turnoPlayer2 que organiza el movimiento del jugador 2
+     */
     public void turnoPlayer2(){
         if (jugador2.isTengoTurno())
         {
@@ -388,7 +435,7 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 llegarMeta();
-                casillasEspecialesPlayer2();
+                //casillasEspecialesPlayer2();
                 casillaPlayer2 = (casillaPlayer2 + numAle) % 40;
                 if (cambiarPosicionPlayer2()) {
                     casillaPlayer2 = (10) % 40;
@@ -429,41 +476,83 @@ public class EscenaJuego extends Escena {
                 posHorizPlayer2 += posVertPlayer2 - getPixels(110);
                 posVertPlayer2 = getPixels(110);
             }
+            pagarCasillaJugador1(casillaPlayer2);
+            casillasEspecialesPlayer2();
+            Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueño());
         }
     }
-
+    /**
+     * Método casillasEspecialesPlayer1 que determina las casillas especiales y realiza la correspondiente acción cuando el jugador 1 cae en una.
+     * */
     public void casillasEspecialesPlayer1(){
         if(casillaPlayer1 == 2 || casillaPlayer1 == 5 || casillaPlayer1 == 15 || casillaPlayer1 == 18 || casillaPlayer1 == 25 || casillaPlayer1 == 35 || casillaPlayer1 == 38){
-            jugador1.setDinero(jugador1.getDinero()+50);
+            if(llervarseDinero == 0) {
+                jugador1.setDinero(jugador1.getDinero() + 50);
+                ganandoDinero = true;
+                llervarseDinero++;
+            }
         }
         if(casillaPlayer1 == 4 || casillaPlayer1 == 7 || casillaPlayer1 == 13 || casillaPlayer1 == 22 || casillaPlayer1 == 28 || casillaPlayer1 == 33 || casillaPlayer1 == 36){
-            jugador1.setDinero(jugador1.getDinero()-50);
+            if(llervarseDinero == 0) {
+                jugador1.setDinero(jugador1.getDinero() - 50);
+                perdiendoDinero = true;
+                llervarseDinero ++;
+            }
         }
     }
+    /**
+     * Método casillasEspecialesPlayer2 que determina las casillas especiales y realiza la correspondiente acción cuando el jugador 2 cae en una.
+     * */
     public void casillasEspecialesPlayer2(){
+
         if(casillaPlayer2 == 2 || casillaPlayer2 == 5 || casillaPlayer2 == 15 || casillaPlayer2 == 18 || casillaPlayer2 == 25 || casillaPlayer2 == 35 || casillaPlayer2 == 38){
-            jugador2.setDinero(jugador2.getDinero()+50);
+            if(llervarseDinero == 0) {
+                jugador2.setDinero(jugador2.getDinero() + 50);
+                ganandoDinero = true;
+                llervarseDinero ++;
+            }
         }
         if(casillaPlayer2 == 4 || casillaPlayer2 == 7 || casillaPlayer2 == 13 || casillaPlayer2 == 22 || casillaPlayer2 == 28 || casillaPlayer2== 33 || casillaPlayer2 == 36){
-            jugador2.setDinero(jugador2.getDinero()-50);
+            if(llervarseDinero == 0) {
+                jugador2.setDinero(jugador2.getDinero() - 50);
+                perdiendoDinero = true;
+                llervarseDinero ++;
+            }
         }
     }
+    /**
+     * Método cambiar posición que indica si el jugador 1 ha caído en la carcel
+     * Return: boolean
+     * */
     public boolean cambiarPosicion(){
         if(casillaPlayer1 == 30){
+            alacarcel = true;
             return true;
         }
         return false;
     }
+    /**
+     * Método cambiar posición que indica si el jugador 2 ha caído en la carcel
+     * @return : boolean
+     * */
     public boolean cambiarPosicionPlayer2(){
         if(casillaPlayer2 == 30){
+            alacarcel = true;
             return true;
         }
         return false;
     }
+    /**
+     * Método numDados que devuelve un número aleatorio entre 1 y 12, en el que se basará el movimiento de los jugadores en cuanto al lanzamiento de dado.
+     * @return : int.
+     * */
     public int numDados(){
-
         if(conDados) {
             //conDados = false;
+            alacarcel = false;
+            entrando = false;
+            ganandoDinero = false;
+            perdiendoDinero = false;
             return (int) (Math.random() * (12 + 1) - 1) + 1;
         }
         else {
@@ -471,15 +560,19 @@ public class EscenaJuego extends Escena {
         }
     }
 
-    public void compraCasillas(){
-
-    }
-    //Metodo encargado de actualizar elementos comunes
+    /**
+     * Nétodo acualizaFisica que actualiza constantemente la física del juego
+     */
     public void actualizarFisica() {
         super.actualizarFisica();
     }
 
-    //Gestiona las pulsaciones
+    /**
+     * Método que gestiona las pulsaciones del usuario en la pantalla.
+     *
+     * @param event
+     * @return int
+     */
     public int onTouchEvent(MotionEvent event) {
         //Llama al control de pulsaciones de la clase padre
         int nuevaEscena=super.onTouchEvent(event);
@@ -501,6 +594,7 @@ public class EscenaJuego extends Escena {
                     numAle = numDados();
                     conDados = false;
                     player1turn = true;
+                    llervarseDinero = 0;
                 }
                 if (rectTurno.contains((int) event.getX(), (int) event.getY())) {
                     numAle = 0;
@@ -515,6 +609,11 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 if (rectCompra.contains((int) event.getX(), (int) event.getY())) {
+                    if(jugador1.isTengoTurno()){
+                        comprarCasilla(jugador1, casillaPlayer1);
+                    }else {
+                        comprarCasilla(jugador2, casillaPlayer2);
+                    }
                 }
                 break;
         }
@@ -523,5 +622,28 @@ public class EscenaJuego extends Escena {
             return nuevaEscena;
         }
         return numEscena;
+    }
+    public void comprarCasilla(Jugador j, int posicion){
+        if(this.linea.get(posicion).getDueño() == null){
+            this.linea.get(posicion).setDueño(j);
+            j.setDinero(j.getDinero()-this.linea.get(posicion).getPrecio());
+        }
+    }
+    public void pagarCasillaJugador1(int posicion){
+        if(llervarseDinero == 0) {
+            if (this.linea.get(posicion).getDueño() == jugador2) {
+                jugador1.setDinero(jugador1.getDinero() - this.linea.get(posicion).getCobrar());
+                jugador2.setDinero(jugador2.getDinero() + this.linea.get(posicion).getCobrar());
+            }
+            llervarseDinero ++;
+        }
+    }public void pagarCasillaJugador2(int posicion){
+        if(llervarseDinero == 0) {
+            if (this.linea.get(posicion).getDueño() == jugador1) {
+                jugador2.setDinero(jugador2.getDinero() - this.linea.get(posicion).getCobrar());
+                jugador1.setDinero(jugador1.getDinero() + this.linea.get(posicion).getCobrar());
+            }
+            llervarseDinero ++;
+        }
     }
 }
