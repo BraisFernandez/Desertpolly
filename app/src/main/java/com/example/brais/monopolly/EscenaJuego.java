@@ -239,7 +239,6 @@ public class EscenaJuego extends Escena {
     public void dibujar(Canvas c) {
         super.dibujar(c);
 
-
         float vertical = getPixels(80);
         float horizontal = getPixels(10);
         c.drawBitmap(fondoJuego, 0, 0, null);
@@ -293,15 +292,23 @@ public class EscenaJuego extends Escena {
         turnoPlayer2();
         c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
         c.drawBitmap(player2, posHorizPlayer2, posVertPlayer2, null);
-       // Log.i("Posición de PLayer1","Casilla: " + casillaPlayer1 + " de: " + linea.size());
+
     }
     public void llegarMeta(){
-        if(casillaPlayer1 > (casillaPlayer1 + numAle) % 40){
-            jugador1.setDinero(jugador1.getDinero()+200);
-        }if(casillaPlayer2 > (casillaPlayer2 + numAle) % 40){
-            jugador2.setDinero(jugador2.getDinero()+200);
+        if(jugador1.isTengoTurno()) {
+            if (casillaPlayer1 > (casillaPlayer1 + numAle) % 40) {
+                jugador1.setDinero(jugador1.getDinero() + 200);
+                Log.i("DENTRO IF 1", "Casilla: " + casillaPlayer1 + " de: " + linea.size());
+            }
+        }
+        else {
+            if (casillaPlayer2 > (casillaPlayer2 + numAle) % 40) {
+                jugador2.setDinero(jugador2.getDinero() + 200);
+                Log.i("DENTRO IF 2", "Casilla: " + casillaPlayer2 + " de: " + linea.size());
+            }
         }
     }
+
     public void turnoPlayer1(){
         if (jugador1.isTengoTurno())
         {
@@ -320,21 +327,22 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 llegarMeta();
+                casillasEspecialesPlayer1();
                 casillaPlayer1 = (casillaPlayer1 + numAle) % 40;
                 if (cambiarPosicion()) {
-                    casillaPlayer1 = (casillaPlayer1 + 3) % 40;
-
+                    casillaPlayer1 = (10) % 40;
+                    //casillaPlayer1 = (casillaPlayer1 + 3) % 40;
                     if (dVertical) {
                         if (subir) {
-                            posVertPlayer1 -= mov.mover(3);
+                            posVertPlayer1 -= mov.mover(20);
                         } else {
-                            posVertPlayer1 += mov.mover(3);
+                            posVertPlayer1 += mov.mover(20);
                         }
                     } else {
                         if (subir) {
-                            posHorizPlayer1 -= mov.mover(3);
+                            posHorizPlayer1 -= mov.mover(20);
                         } else {
-                            posHorizPlayer1 += mov.mover(3);
+                            posHorizPlayer1 += mov.mover(20);
                         }
                     }
                 }
@@ -381,21 +389,21 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 llegarMeta();
+                casillasEspecialesPlayer2();
                 casillaPlayer2 = (casillaPlayer2 + numAle) % 40;
                 if (cambiarPosicionPlayer2()) {
-                    casillaPlayer2 = (casillaPlayer2 + 3) % 40;
-
+                    casillaPlayer2 = (10) % 40;
                     if (dVerticalPlayer2) {
                         if (subirPlayer2) {
-                            posVertPlayer2 -= mov.mover(3);
+                            posVertPlayer2 -= mov.mover(20);
                         } else {
-                            posVertPlayer2 += mov.mover(3);
+                            posVertPlayer2 += mov.mover(20);
                         }
                     } else {
                         if (subirPlayer2) {
-                            posHorizPlayer2 -= mov.mover(3);
+                            posHorizPlayer2 -= mov.mover(20);
                         } else {
-                            posHorizPlayer2 += mov.mover(3);
+                            posHorizPlayer2 += mov.mover(20);
                         }
                     }
                 }
@@ -424,14 +432,31 @@ public class EscenaJuego extends Escena {
             }
         }
     }
-    public boolean cambiarPosicion(){
+
+    public void casillasEspecialesPlayer1(){
         if(casillaPlayer1 == 2 || casillaPlayer1 == 5 || casillaPlayer1 == 15 || casillaPlayer1 == 18 || casillaPlayer1 == 25 || casillaPlayer1 == 35 || casillaPlayer1 == 38){
+            jugador1.setDinero(jugador1.getDinero()+50);
+        }
+        if(casillaPlayer1 == 4 || casillaPlayer1 == 7 || casillaPlayer1 == 13 || casillaPlayer1 == 22 || casillaPlayer1 == 28 || casillaPlayer1 == 33 || casillaPlayer1 == 36){
+            jugador1.setDinero(jugador1.getDinero()-50);
+        }
+    }
+    public void casillasEspecialesPlayer2(){
+        if(casillaPlayer2 == 2 || casillaPlayer2 == 5 || casillaPlayer2 == 15 || casillaPlayer2 == 18 || casillaPlayer2 == 25 || casillaPlayer2 == 35 || casillaPlayer2 == 38){
+            jugador2.setDinero(jugador2.getDinero()+50);
+        }
+        if(casillaPlayer2 == 4 || casillaPlayer2 == 7 || casillaPlayer2 == 13 || casillaPlayer2 == 22 || casillaPlayer2 == 28 || casillaPlayer2== 33 || casillaPlayer2 == 36){
+            jugador2.setDinero(jugador2.getDinero()-50);
+        }
+    }
+    public boolean cambiarPosicion(){
+        if(casillaPlayer1 == 30){
             return true;
         }
         return false;
     }
     public boolean cambiarPosicionPlayer2(){
-        if(casillaPlayer2 == 2 || casillaPlayer2 == 5 || casillaPlayer2 == 15 || casillaPlayer2 == 18 || casillaPlayer2 == 25 || casillaPlayer2 == 35 || casillaPlayer2 == 38){
+        if(casillaPlayer2 == 30){
             return true;
         }
         return false;
