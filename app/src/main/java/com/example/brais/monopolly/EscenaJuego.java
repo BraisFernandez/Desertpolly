@@ -24,7 +24,7 @@ public class EscenaJuego extends Escena {
             casillaPlayer1 = 0, casillaPlayer2 = 0, llervarseDinero = 0, trebol_gato = 0;
     Rect rectDados, rectCompra, rectTurno;
     boolean tirarDados = false, player1turn = false,dVertical = true, dVerticalPlayer2 = true, subir = true, subirPlayer2 = true, conDados = true, alacarcel = false, entrando = false,
-    ganandoDinero = false, perdiendoDinero = false;
+    ganandoDinero = false, perdiendoDinero = false, gameOver = false;
     Jugador jugador1 = new Jugador(player1, 0, 1000, true);
     Jugador jugador2 = new Jugador(player2, 0, 1000, false);
     ArrayList<Casillas> linea = new ArrayList<>();
@@ -315,10 +315,12 @@ public class EscenaJuego extends Escena {
            // perdiendoDinero = false;
         }
         if(jugador1.getDinero() <= 0){
-            c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla/5, altoPantalla - getPixels(70), pDinero);
+            gameOver = true;
         }
         if(jugador2.getDinero() <= 0){
-            c.drawText("¡¡¡ Ha ganado el Jugador 1 !!!", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+            c.drawText("¡¡¡ Ha ganado el Jugador 1 !!!", anchoPantalla/5, altoPantalla - getPixels(70), pDinero);
+            gameOver = true;
         }
         c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
         c.drawBitmap(player2, posHorizPlayer2, posVertPlayer2, null);
@@ -590,30 +592,35 @@ public class EscenaJuego extends Escena {
                     return 1;
                 }
                 if (rectDados.contains((int) event.getX(), (int) event.getY())) {
-                    tirarDados = true;
-                    numAle = numDados();
-                    conDados = false;
-                    player1turn = true;
-                    llervarseDinero = 0;
-                    trebol_gato = 0;
+                    if(!gameOver) {
+                        tirarDados = true;
+                        numAle = numDados();
+                        conDados = false;
+                        player1turn = true;
+                        llervarseDinero = 0;
+                        trebol_gato = 0;
+                    }
                 }
                 if (rectTurno.contains((int) event.getX(), (int) event.getY())) {
-                    numAle = 0;
-                    conDados = true;
-                    if(jugador1.isTengoTurno()){
-                        jugador1.setTengoTurno(false);
-                        jugador2.setTengoTurno(true);
-                    }
-                    else{
-                        jugador2.setTengoTurno(false);
-                        jugador1.setTengoTurno(true);
+                    if(!gameOver) {
+                        numAle = 0;
+                        conDados = true;
+                        if (jugador1.isTengoTurno()) {
+                            jugador1.setTengoTurno(false);
+                            jugador2.setTengoTurno(true);
+                        } else {
+                            jugador2.setTengoTurno(false);
+                            jugador1.setTengoTurno(true);
+                        }
                     }
                 }
                 if (rectCompra.contains((int) event.getX(), (int) event.getY())) {
-                    if(jugador1.isTengoTurno()){
-                        comprarCasilla(jugador1, casillaPlayer1);
-                    }else {
-                        comprarCasilla(jugador2, casillaPlayer2);
+                    if (!gameOver) {
+                        if (jugador1.isTengoTurno()) {
+                            comprarCasilla(jugador1, casillaPlayer1);
+                        } else {
+                            comprarCasilla(jugador2, casillaPlayer2);
+                        }
                     }
                 }
                 break;
