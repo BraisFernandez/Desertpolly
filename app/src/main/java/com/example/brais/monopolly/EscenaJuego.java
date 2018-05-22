@@ -21,7 +21,7 @@ public class EscenaJuego extends Escena {
     Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2, imgCeldaVerde, imgCeldaSalida, imgTrebol, imgGatito, imgCeldaAzulOs, imgCeldaAzulCl,
             imgCeldaMarron, imgCeldaNaranja, imgCeldaRoja, imgCeldaRosa, imgCasino, imgCeldaAmarilla, imgCeldaCarcel, imgCeldaPolicia;
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35), posVertPlayer2 = getPixels(110), posHorizPlayer2 = getPixels(35),
-            casillaPlayer1 = 0, casillaPlayer2 = 0, llervarseDinero = 0;
+            casillaPlayer1 = 0, casillaPlayer2 = 0, llervarseDinero = 0, trebol_gato = 0;
     Rect rectDados, rectCompra, rectTurno;
     boolean tirarDados = false, player1turn = false,dVertical = true, dVerticalPlayer2 = true, subir = true, subirPlayer2 = true, conDados = true, alacarcel = false, entrando = false,
     ganandoDinero = false, perdiendoDinero = false;
@@ -299,20 +299,20 @@ public class EscenaJuego extends Escena {
         turnoPlayer2();
         if(alacarcel){
             c.drawText("A la carcel!! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
-            alacarcel = false;
+            //alacarcel = false;
         }
         if(entrando){
             c.drawText("Sumas 200€ !! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
-            entrando = false;
+            //entrando = false;
         }
         if(ganandoDinero){
             Log.i("BOOLEANA","BOOLEANA"+ ganandoDinero);
             c.drawText("Sumas 50€ :) ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
-            ganandoDinero = false;
+            //ganandoDinero = false;
         }
         if(perdiendoDinero){
             c.drawText("Pierdes 50€ :( ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
-            perdiendoDinero = false;
+           // perdiendoDinero = false;
         }
         if(jugador1.getDinero() <= 0){
             c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
@@ -476,9 +476,9 @@ public class EscenaJuego extends Escena {
                 posHorizPlayer2 += posVertPlayer2 - getPixels(110);
                 posVertPlayer2 = getPixels(110);
             }
-            pagarCasillaJugador1(casillaPlayer2);
+            pagarCasillaJugador2(casillaPlayer2);
             casillasEspecialesPlayer2();
-            Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueño());
+            //Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueño());
         }
     }
     /**
@@ -486,17 +486,17 @@ public class EscenaJuego extends Escena {
      * */
     public void casillasEspecialesPlayer1(){
         if(casillaPlayer1 == 2 || casillaPlayer1 == 5 || casillaPlayer1 == 15 || casillaPlayer1 == 18 || casillaPlayer1 == 25 || casillaPlayer1 == 35 || casillaPlayer1 == 38){
-            if(llervarseDinero == 0) {
+            if(trebol_gato == 0) {
                 jugador1.setDinero(jugador1.getDinero() + 50);
                 ganandoDinero = true;
-                llervarseDinero++;
+                trebol_gato++;
             }
         }
         if(casillaPlayer1 == 4 || casillaPlayer1 == 7 || casillaPlayer1 == 13 || casillaPlayer1 == 22 || casillaPlayer1 == 28 || casillaPlayer1 == 33 || casillaPlayer1 == 36){
-            if(llervarseDinero == 0) {
+            if(trebol_gato == 0) {
                 jugador1.setDinero(jugador1.getDinero() - 50);
                 perdiendoDinero = true;
-                llervarseDinero ++;
+                trebol_gato ++;
             }
         }
     }
@@ -506,17 +506,17 @@ public class EscenaJuego extends Escena {
     public void casillasEspecialesPlayer2(){
 
         if(casillaPlayer2 == 2 || casillaPlayer2 == 5 || casillaPlayer2 == 15 || casillaPlayer2 == 18 || casillaPlayer2 == 25 || casillaPlayer2 == 35 || casillaPlayer2 == 38){
-            if(llervarseDinero == 0) {
+            if(trebol_gato == 0) {
                 jugador2.setDinero(jugador2.getDinero() + 50);
                 ganandoDinero = true;
-                llervarseDinero ++;
+                trebol_gato ++;
             }
         }
         if(casillaPlayer2 == 4 || casillaPlayer2 == 7 || casillaPlayer2 == 13 || casillaPlayer2 == 22 || casillaPlayer2 == 28 || casillaPlayer2== 33 || casillaPlayer2 == 36){
-            if(llervarseDinero == 0) {
+            if(trebol_gato == 0) {
                 jugador2.setDinero(jugador2.getDinero() - 50);
                 perdiendoDinero = true;
-                llervarseDinero ++;
+                trebol_gato ++;
             }
         }
     }
@@ -595,6 +595,7 @@ public class EscenaJuego extends Escena {
                     conDados = false;
                     player1turn = true;
                     llervarseDinero = 0;
+                    trebol_gato = 0;
                 }
                 if (rectTurno.contains((int) event.getX(), (int) event.getY())) {
                     numAle = 0;
@@ -623,12 +624,23 @@ public class EscenaJuego extends Escena {
         }
         return numEscena;
     }
+
+    /**
+     * Método comprarCasilla que permite a los jugadores comprar una casilla, siempre que esta no tenga dueño
+     * @param j
+     * @param posicion
+     */
     public void comprarCasilla(Jugador j, int posicion){
         if(this.linea.get(posicion).getDueño() == null){
             this.linea.get(posicion).setDueño(j);
             j.setDinero(j.getDinero()-this.linea.get(posicion).getPrecio());
         }
     }
+
+    /**
+     * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueño es el jugador 2
+     * @param posicion
+     */
     public void pagarCasillaJugador1(int posicion){
         if(llervarseDinero == 0) {
             if (this.linea.get(posicion).getDueño() == jugador2) {
@@ -637,7 +649,13 @@ public class EscenaJuego extends Escena {
             }
             llervarseDinero ++;
         }
-    }public void pagarCasillaJugador2(int posicion){
+    }
+
+    /**
+     * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueño es el jugador 2
+     * @param posicion
+     */
+    public void pagarCasillaJugador2(int posicion){
         if(llervarseDinero == 0) {
             if (this.linea.get(posicion).getDueño() == jugador1) {
                 jugador2.setDinero(jugador2.getDinero() - this.linea.get(posicion).getCobrar());
