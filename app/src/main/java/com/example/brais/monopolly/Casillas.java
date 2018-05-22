@@ -11,9 +11,11 @@ public class Casillas {
     public boolean especiales;
     public int tamaño;
     public Bitmap imgCelda;
+    public int cobrar;
 
-    public Casillas(int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda) {
+    public Casillas(int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda, int cobrar) {
         this.dueño = null;
+        this.cobrar = cobrar;
         this.precio = precio;
         this.numero = numero;
         this.especiales = especiales;
@@ -27,6 +29,14 @@ public class Casillas {
 
     public void setDueño(Jugador dueño) {
         this.dueño = dueño;
+    }
+
+    public int getCobrar() {
+        return cobrar;
+    }
+
+    public void setCobrar(int cobrar) {
+        this.cobrar = cobrar;
     }
 
     public int getPrecio() {

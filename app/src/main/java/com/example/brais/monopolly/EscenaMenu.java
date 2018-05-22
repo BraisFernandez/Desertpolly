@@ -8,19 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
-import android.os.Vibrator;
-import android.support.annotation.RequiresApi;
 import android.view.MotionEvent;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static android.content.Context.VIBRATOR_SERVICE;
 
 public class EscenaMenu extends Escena {
 
@@ -41,14 +30,14 @@ public class EscenaMenu extends Escena {
 
     public EscenaMenu(int numEscena, Context context,  int anchoPantalla, int altoPantalla) {
         super(numEscena, context, anchoPantalla, altoPantalla);
+        faw = Typeface.createFromAsset(context.getResources().getAssets(), "tipografia.ttf");
         p = new Paint();
         p.setTypeface(faw);
         pTitulo = new Paint();
         pTitulo.setTypeface(faw);
-        pTitulo.setColor(Color.BLACK);
+        pTitulo.setColor(context.getResources().getColor(R.color.colorRojoMenu));
         pTitulo.setTextSize(70);
         pTitulo.setTextAlign(Paint.Align.CENTER);
-
         // Texto Escena
         //pTexto = new Paint();
         p.setColor(Color.BLUE);
@@ -92,7 +81,7 @@ public class EscenaMenu extends Escena {
         //c.drawBitmap(fondoMenu, 0, 0, null);
         c.drawBitmap(fondoMenu, 0, 0, null);
         //Dibujamos los rectángulos
-        c.drawText("Monopoly", anchoPantalla / 2, getPixels(75), pTitulo);
+        c.drawText("Property War", anchoPantalla / 2, getPixels(75), pTitulo);
         c.drawRect(btnJugar, pBoton);
         c.drawRect(btnLogros, pBoton);
         c.drawRect(btnRecords, pBoton);

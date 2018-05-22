@@ -25,9 +25,9 @@ public class EscenaJuego extends Escena {
     Jugador jugador2 = new Jugador(player2, 0, 1000, false);
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
+    Casillas c = new Casillas(100, 0,false, 100, imgCeldaVerde, 0);
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
-
 
         pBoton=new Paint();
         pBoton.setColor(Color.RED);
@@ -85,7 +85,7 @@ public class EscenaJuego extends Escena {
         imgCeldaSalida = Bitmap.createBitmap(imgCeldaSalida);
         imgCeldaSalida = Bitmap.createScaledBitmap(imgCeldaSalida, getPixels(50), getPixels(50), true);
 
-        Casillas salida = new Casillas(200, 0,true, 100, imgCeldaSalida );
+        Casillas salida = new Casillas(200, 0,true, 100, imgCeldaSalida, 0);
         this.linea.add(salida);
 
         imgTrebol = BitmapFactory.decodeResource(context.getResources(), R.drawable.casillatrebol);
@@ -144,58 +144,58 @@ public class EscenaJuego extends Escena {
         for (int i = 1; i < 40; i++) {
             //Log.i("EOOOOOOOOOOOO", "POSICION: " + i);
             if(i == 1|| i == 3){
-                Casillas c = new Casillas(100, i,false, 100, imgCeldaVerde);
+                 c = new Casillas(100, i,false, 100, imgCeldaVerde, 0);//25
                 this.linea.add(c);
             }
             else if(i == 2 || i == 5 || i == 15|| i == 18 || i == 25 || i == 35 || i == 38){
-                Casillas c = new Casillas(100, i,true, 100, imgTrebol);
+                 c = new Casillas(0, i,true, 100, imgTrebol, 0);
                 this.linea.add(c);
 
             }
             else if(i == 4 || i == 7 || i == 13 || i == 22 || i == 28 || i == 33 || i == 36){
-                Casillas c = new Casillas(100, i, true, 100, imgGatito);
+                 c = new Casillas(0, i, true, 100, imgGatito, 0);
                 this.linea.add(c);
             }
            else if(i == 6 || i == 8 || i == 9){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaRoja);
+                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 0);//50
                 this.linea.add(c);
             }else if(i == 11 || i == 12 || i == 14){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaRosa);
+                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 0);//75
                 this.linea.add(c);
             }else if(i == 16 || i == 17 || i == 19){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaMarron);
+                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 0);//100
                 this.linea.add(c);
             }
             else if(i == 21 || i == 23 || i == 24){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaAzulCl);
+                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 0);//125
                 this.linea.add(c);
             }
             else if(i == 26 || i == 27 || i == 29){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaNaranja);
+                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 0);//150
                 this.linea.add(c);
             }
             else if(i == 31 || i == 32 || i == 34){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaAmarilla);
+                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 0);//175
                 this.linea.add(c);
             }
             else if(i == 37 || i == 39){
-                Casillas c = new Casillas(100, i, false, 100, imgCeldaAzulOs);
+                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 0);//200
                 this.linea.add(c);
             }
             else if(i == 10) {
-                Casillas c = new Casillas(100, i, true, 100, imgCeldaCarcel);
+                 c = new Casillas(100, i, true, 100, imgCeldaCarcel, 0);
                 this.linea.add(c);
             }
             else if(i == 20){
-                Casillas c = new Casillas(100, i, true, 100, imgCasino);
+                 c = new Casillas(100, i, true, 100, imgCasino, 0);
                 this.linea.add(c);
 
             }else if(i == 30){
-                Casillas c = new Casillas(100, i, true, 100, imgCeldaPolicia);
+                 c = new Casillas(100, i, true, 100, imgCeldaPolicia, 0);
                 this.linea.add(c);
             }
             else {
-                Casillas c = new Casillas(100, i,false, 100, imgCeldaVerde);
+                 c = new Casillas(100, i,false, 100, imgCeldaVerde, 0);
                 this.linea.add(c);
             }
         }
@@ -231,14 +231,13 @@ public class EscenaJuego extends Escena {
 //            this.linea.add(c2);
 //        }
 
-        esquina = new Casillas(100, 8,false, 100, imgCeldaSalida);
+        esquina = new Casillas(100, 8,false, 100, imgCeldaSalida, 0);
 
     }
     Movimiento mov = new Movimiento(1, context, anchoPantalla, altoPantalla);
     //Escena inicial (se le pasa el lienzo (el canvas))
     public void dibujar(Canvas c) {
         super.dibujar(c);
-
         float vertical = getPixels(80);
         float horizontal = getPixels(10);
         c.drawBitmap(fondoJuego, 0, 0, null);
@@ -472,6 +471,9 @@ public class EscenaJuego extends Escena {
         }
     }
 
+    public void compraCasillas(){
+
+    }
     //Metodo encargado de actualizar elementos comunes
     public void actualizarFisica() {
         super.actualizarFisica();
