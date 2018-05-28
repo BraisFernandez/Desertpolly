@@ -8,11 +8,11 @@ import android.graphics.Matrix;
  */
 public class Casillas {
 
-    public Jugador dueño;
+    public Jugador dueno;
     public int precio;
     public int numero;
     public boolean especiales;
-    public int tamaño;
+    public int tamano;
     public Bitmap imgCelda;
     public int cobrar;
 
@@ -21,26 +21,26 @@ public class Casillas {
      * @param precio
      * @param numero
      * @param especiales
-     * @param tamaño
+     * @param tamano
      * @param imgCelda
      * @param cobrar
      */
-    public Casillas(int precio, int numero, boolean especiales, int tamaño, Bitmap imgCelda, int cobrar) {
-        this.dueño = null;
+    public Casillas(int precio, int numero, boolean especiales, int tamano, Bitmap imgCelda, int cobrar) {
+        this.dueno = null;
         this.cobrar = cobrar;
         this.precio = precio;
         this.numero = numero;
         this.especiales = especiales;
-        this.tamaño = tamaño;
+        this.tamano = tamano;
         this.imgCelda = imgCelda;
     }
 
-    public Jugador getDueño() {
-        return dueño;
+    public Jugador getDueno() {
+        return dueno;
     }
 
-    public void setDueño(Jugador dueño) {
-        this.dueño = dueño;
+    public void setDueno(Jugador dueno) {
+        this.dueno = dueno;
     }
 
     public int getCobrar() {

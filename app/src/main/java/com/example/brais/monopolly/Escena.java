@@ -129,7 +129,7 @@ public class Escena {
     }
     /*
      * Metodo getPixels que establece unos pixeles dp como genericos para distintas resoluciones de pantalla
-     * Parametro: flat dp, para saber los pixeles, el tamaño de nuestro elemento
+     * Parametro: flat dp, para saber los pixeles, el tamano de nuestro elemento
      * Return: int */
     int getPixels(float dp) {
         DisplayMetrics metrics = new DisplayMetrics();

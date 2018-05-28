@@ -161,29 +161,29 @@ public class EscenaJuego extends Escena {
                 this.linea.add(c);
             }
            else if(i == 6 || i == 8 || i == 9){
-                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);//50
+                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);
                 this.linea.add(c);
             }else if(i == 11 || i == 12 || i == 14){
-                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);//75
+                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);
                 this.linea.add(c);
             }else if(i == 16 || i == 17 || i == 19){
-                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);//100
+                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);
                 this.linea.add(c);
             }
             else if(i == 21 || i == 23 || i == 24){
-                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);//125
+                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);
                 this.linea.add(c);
             }
             else if(i == 26 || i == 27 || i == 29){
-                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 150);//150
+                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 150);
                 this.linea.add(c);
             }
             else if(i == 31 || i == 32 || i == 34){
-                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 175);//175
+                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 175);
                 this.linea.add(c);
             }
             else if(i == 37 || i == 39){
-                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 200);//200
+                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 200);
                 this.linea.add(c);
             }
             else if(i == 10) {
@@ -371,7 +371,7 @@ public class EscenaJuego extends Escena {
 
                 casillaPlayer1 = (casillaPlayer1 + numAle) % 40;
 
-                if (cambiarPosicion()) {
+                if (cambiarPosicion(casillaPlayer1)) {
                     casillaPlayer1 = (10) % 40;
                     //casillaPlayer1 = (casillaPlayer1 + 3) % 40;
                     if (dVertical) {
@@ -411,9 +411,8 @@ public class EscenaJuego extends Escena {
                 posHorizPlayer1 += posVertPlayer1 - getPixels(110);
                 posVertPlayer1 = getPixels(110);
             }
-            pagarCasillaJugador1(casillaPlayer1);
-            casillasEspecialesPlayer1();
-            Log.i("DUEÑO","TURNOJUGADOR1" + this.linea.get(casillaPlayer1).getDueño());
+            pagarCasillaJugador(casillaPlayer1, jugador1, jugador2);
+            casillasEspecialesPlayer(jugador1, casillaPlayer1);
         }
     }
     /**
@@ -439,7 +438,7 @@ public class EscenaJuego extends Escena {
                 llegarMeta();
                 //casillasEspecialesPlayer2();
                 casillaPlayer2 = (casillaPlayer2 + numAle) % 40;
-                if (cambiarPosicionPlayer2()) {
+                if (cambiarPosicion(casillaPlayer2)) {
                     casillaPlayer2 = (10) % 40;
                     if (dVerticalPlayer2) {
                         if (subirPlayer2) {
@@ -478,67 +477,37 @@ public class EscenaJuego extends Escena {
                 posHorizPlayer2 += posVertPlayer2 - getPixels(110);
                 posVertPlayer2 = getPixels(110);
             }
-            pagarCasillaJugador2(casillaPlayer2);
-            casillasEspecialesPlayer2();
-            //Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueño());
+            pagarCasillaJugador(casillaPlayer2, jugador2, jugador1);
+            casillasEspecialesPlayer(jugador2, casillaPlayer2);
+            //Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueno());
         }
     }
     /**
      * Método casillasEspecialesPlayer1 que determina las casillas especiales y realiza la correspondiente acción cuando el jugador 1 cae en una.
      * */
-    public void casillasEspecialesPlayer1(){
-        if(casillaPlayer1 == 2 || casillaPlayer1 == 5 || casillaPlayer1 == 15 || casillaPlayer1 == 18 || casillaPlayer1 == 25 || casillaPlayer1 == 35 || casillaPlayer1 == 38){
+    public void casillasEspecialesPlayer(Jugador j, int casillaPlayer){
+        if(casillaPlayer == 2 || casillaPlayer == 5 || casillaPlayer == 15 || casillaPlayer == 18 || casillaPlayer == 25 || casillaPlayer == 35 || casillaPlayer == 38){
             if(trebol_gato == 0) {
-                jugador1.setDinero(jugador1.getDinero() + 50);
+                j.setDinero(j.getDinero() + 50);
                 ganandoDinero = true;
                 trebol_gato++;
             }
         }
-        if(casillaPlayer1 == 4 || casillaPlayer1 == 7 || casillaPlayer1 == 13 || casillaPlayer1 == 22 || casillaPlayer1 == 28 || casillaPlayer1 == 33 || casillaPlayer1 == 36){
+        if(casillaPlayer == 4 || casillaPlayer == 7 || casillaPlayer == 13 || casillaPlayer == 22 || casillaPlayer == 28 || casillaPlayer == 33 || casillaPlayer == 36){
             if(trebol_gato == 0) {
-                jugador1.setDinero(jugador1.getDinero() - 50);
+                j.setDinero(j.getDinero() - 50);
                 perdiendoDinero = true;
                 trebol_gato ++;
             }
         }
     }
-    /**
-     * Método casillasEspecialesPlayer2 que determina las casillas especiales y realiza la correspondiente acción cuando el jugador 2 cae en una.
-     * */
-    public void casillasEspecialesPlayer2(){
 
-        if(casillaPlayer2 == 2 || casillaPlayer2 == 5 || casillaPlayer2 == 15 || casillaPlayer2 == 18 || casillaPlayer2 == 25 || casillaPlayer2 == 35 || casillaPlayer2 == 38){
-            if(trebol_gato == 0) {
-                jugador2.setDinero(jugador2.getDinero() + 50);
-                ganandoDinero = true;
-                trebol_gato ++;
-            }
-        }
-        if(casillaPlayer2 == 4 || casillaPlayer2 == 7 || casillaPlayer2 == 13 || casillaPlayer2 == 22 || casillaPlayer2 == 28 || casillaPlayer2== 33 || casillaPlayer2 == 36){
-            if(trebol_gato == 0) {
-                jugador2.setDinero(jugador2.getDinero() - 50);
-                perdiendoDinero = true;
-                trebol_gato ++;
-            }
-        }
-    }
     /**
      * Método cambiar posición que indica si el jugador 1 ha caído en la carcel
      * Return: boolean
      * */
-    public boolean cambiarPosicion(){
-        if(casillaPlayer1 == 30){
-            alacarcel = true;
-            return true;
-        }
-        return false;
-    }
-    /**
-     * Método cambiar posición que indica si el jugador 2 ha caído en la carcel
-     * @return : boolean
-     * */
-    public boolean cambiarPosicionPlayer2(){
-        if(casillaPlayer2 == 30){
+    public boolean cambiarPosicion(int casillaPlayer){
+        if(casillaPlayer == 30){
             alacarcel = true;
             return true;
         }
@@ -550,7 +519,6 @@ public class EscenaJuego extends Escena {
      * */
     public int numDados(){
         if(conDados) {
-            //conDados = false;
             alacarcel = false;
             entrando = false;
             ganandoDinero = false;
@@ -633,40 +601,26 @@ public class EscenaJuego extends Escena {
     }
 
     /**
-     * Método comprarCasilla que permite a los jugadores comprar una casilla, siempre que esta no tenga dueño
+     * Método comprarCasilla que permite a los jugadores comprar una casilla, siempre que esta no tenga dueno
      * @param j
      * @param posicion
      */
     public void comprarCasilla(Jugador j, int posicion){
-        if(this.linea.get(posicion).getDueño() == null){
-            this.linea.get(posicion).setDueño(j);
+        if(this.linea.get(posicion).getDueno() == null){
+            this.linea.get(posicion).setDueno(j);
             j.setDinero(j.getDinero()-this.linea.get(posicion).getPrecio());
         }
     }
 
     /**
-     * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueño es el jugador 2
+     * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueno es el jugador 2
      * @param posicion
      */
-    public void pagarCasillaJugador1(int posicion){
+    public void pagarCasillaJugador(int posicion, Jugador j, Jugador jOtro){
         if(llervarseDinero == 0) {
-            if (this.linea.get(posicion).getDueño() == jugador2) {
-                jugador1.setDinero(jugador1.getDinero() - this.linea.get(posicion).getCobrar());
-                jugador2.setDinero(jugador2.getDinero() + this.linea.get(posicion).getCobrar());
-            }
-            llervarseDinero ++;
-        }
-    }
-
-    /**
-     * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueño es el jugador 2
-     * @param posicion
-     */
-    public void pagarCasillaJugador2(int posicion){
-        if(llervarseDinero == 0) {
-            if (this.linea.get(posicion).getDueño() == jugador1) {
-                jugador2.setDinero(jugador2.getDinero() - this.linea.get(posicion).getCobrar());
-                jugador1.setDinero(jugador1.getDinero() + this.linea.get(posicion).getCobrar());
+            if (this.linea.get(posicion).getDueno() == j) {
+                j.setDinero(j.getDinero() - this.linea.get(posicion).getCobrar());
+                jOtro.setDinero(jOtro.getDinero() + this.linea.get(posicion).getCobrar());
             }
             llervarseDinero ++;
         }
