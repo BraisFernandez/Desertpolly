@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 
 /**
-* Clase EscenaJuego que hereda de Escena. Esta es la clase donde organizo las casillas del tablero y añado sus posiciones en una colección.
-* */
+ * Clase EscenaJuego que hereda de Escena. Esta es la clase donde organizo las casillas del tablero y añado sus posiciones en una colección.
+ */
 public class EscenaJuego extends Escena {
     Paint pBoton, pTurno, pNum, pDinero, pCompra;
     Bitmap imgVolver, fondoJuego, tablero, dados, player1, player2, imgCeldaVerde, imgCeldaSalida, imgTrebol, imgGatito, imgCeldaAzulOs, imgCeldaAzulCl,
@@ -23,31 +23,32 @@ public class EscenaJuego extends Escena {
     int numAle, posVertPlayer1 = getPixels(110), posHorizPlayer1 = getPixels(35), posVertPlayer2 = getPixels(110), posHorizPlayer2 = getPixels(35),
             casillaPlayer1 = 0, casillaPlayer2 = 0, llervarseDinero = 0, trebol_gato = 0;
     Rect rectDados, rectCompra, rectTurno;
-    boolean tirarDados = false, player1turn = false,dVertical = true, dVerticalPlayer2 = true, subir = true, subirPlayer2 = true, conDados = true, alacarcel = false, entrando = false,
-    ganandoDinero = false, perdiendoDinero = false, gameOver = false;
-    Jugador jugador1 = new Jugador(player1, 0, 1000, true);
-    Jugador jugador2 = new Jugador(player2, 0, 1000, false);
+    boolean tirarDados = false, player1turn = false, conDados = true, alacarcel = false, entrando = false,
+            ganandoDinero = false, perdiendoDinero = false, gameOver = false;
+    Jugador jugador1;
+    Jugador jugador2;
     ArrayList<Casillas> linea = new ArrayList<>();
     Casillas esquina;
-    Casillas c = new Casillas(100, 0,false, 100, imgCeldaVerde, 0);
+    Casillas c = new Casillas(100, 0, false, 100, imgCeldaVerde, 0);
+
     public EscenaJuego(int numEscena, Context contexto, int anchoPantalla, int altoPantalla) {
         super(numEscena, contexto, anchoPantalla, altoPantalla);
 
-        pBoton=new Paint();
+        pBoton = new Paint();
         pBoton.setColor(Color.RED);
         pBoton.setAlpha(50);
         pBoton.setTextSize(70);
 
-        pTurno=new Paint();
+        pTurno = new Paint();
         pTurno.setColor(Color.BLUE);
         pTurno.setAlpha(50);
         pTurno.setTextSize(70);
 
-        pDinero=new Paint();
+        pDinero = new Paint();
         pDinero.setColor(Color.YELLOW);
         pDinero.setTextSize(40);
 
-        pCompra=new Paint();
+        pCompra = new Paint();
         pCompra.setColor(Color.GREEN);
         pCompra.setTextSize(40);
 
@@ -75,7 +76,8 @@ public class EscenaJuego extends Escena {
         rectTurno = new Rect(getPixels(220), getPixels(440), anchoPantalla - getPixels(40), altoPantalla - getPixels(120));
 
         numAle = numDados();
-
+        Bitmap player1;
+        Bitmap player2;
         player1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.player1);
         player1 = Bitmap.createBitmap(player1);
         player1 = Bitmap.createScaledBitmap(player1, getPixels(20), getPixels(20), true);
@@ -84,12 +86,14 @@ public class EscenaJuego extends Escena {
         player2 = Bitmap.createBitmap(player2);
         player2 = Bitmap.createScaledBitmap(player2, getPixels(20), getPixels(20), true);
 
+        this.jugador1 = new Jugador(player1, 1000, true, context);
+        this.jugador2 = new Jugador(player2, 1000, false, context);
 
         imgCeldaSalida = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdasalida);
         imgCeldaSalida = Bitmap.createBitmap(imgCeldaSalida);
         imgCeldaSalida = Bitmap.createScaledBitmap(imgCeldaSalida, getPixels(50), getPixels(50), true);
 
-        Casillas salida = new Casillas(200, 0,true, 100, imgCeldaSalida, 0);
+        Casillas salida = new Casillas(200, 0, true, 100, imgCeldaSalida, 0);
         this.linea.add(salida);
 
         imgTrebol = BitmapFactory.decodeResource(context.getResources(), R.drawable.casillatrebol);
@@ -147,59 +151,49 @@ public class EscenaJuego extends Escena {
 
         for (int i = 1; i < 40; i++) {
             //Log.i("EOOOOOOOOOOOO", "POSICION: " + i);
-            if(i == 1|| i == 3){
-                 c = new Casillas(100, i,false, 100, imgCeldaVerde, 0);//25
+            if (i == 1 || i == 3) {
+                c = new Casillas(100, i, false, 100, imgCeldaVerde, 0);//25
                 this.linea.add(c);
-            }
-            else if(i == 2 || i == 5 || i == 15|| i == 18 || i == 25 || i == 35 || i == 38){
-                 c = new Casillas(0, i,true, 100, imgTrebol, 0);
-                this.linea.add(c);
-
-            }
-            else if(i == 4 || i == 7 || i == 13 || i == 22 || i == 28 || i == 33 || i == 36){
-                 c = new Casillas(0, i, true, 100, imgGatito, 0);
-                this.linea.add(c);
-            }
-           else if(i == 6 || i == 8 || i == 9){
-                 c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);
-                this.linea.add(c);
-            }else if(i == 11 || i == 12 || i == 14){
-                 c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);
-                this.linea.add(c);
-            }else if(i == 16 || i == 17 || i == 19){
-                 c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);
-                this.linea.add(c);
-            }
-            else if(i == 21 || i == 23 || i == 24){
-                 c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);
-                this.linea.add(c);
-            }
-            else if(i == 26 || i == 27 || i == 29){
-                 c = new Casillas(300, i, false, 100, imgCeldaNaranja, 150);
-                this.linea.add(c);
-            }
-            else if(i == 31 || i == 32 || i == 34){
-                 c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 175);
-                this.linea.add(c);
-            }
-            else if(i == 37 || i == 39){
-                 c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 200);
-                this.linea.add(c);
-            }
-            else if(i == 10) {
-                 c = new Casillas(100, i, true, 100, imgCeldaCarcel, 0);
-                this.linea.add(c);
-            }
-            else if(i == 20){
-                 c = new Casillas(100, i, true, 100, imgCasino, 0);
+            } else if (i == 2 || i == 5 || i == 15 || i == 18 || i == 25 || i == 35 || i == 38) {
+                c = new Casillas(0, i, true, 100, imgTrebol, 0);
                 this.linea.add(c);
 
-            }else if(i == 30){
-                 c = new Casillas(100, i, true, 100, imgCeldaPolicia, 0);
+            } else if (i == 4 || i == 7 || i == 13 || i == 22 || i == 28 || i == 33 || i == 36) {
+                c = new Casillas(0, i, true, 100, imgGatito, 0);
                 this.linea.add(c);
-            }
-            else {
-                 c = new Casillas(100, i,false, 100, imgCeldaVerde, 0);
+            } else if (i == 6 || i == 8 || i == 9) {
+                c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);
+                this.linea.add(c);
+            } else if (i == 11 || i == 12 || i == 14) {
+                c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);
+                this.linea.add(c);
+            } else if (i == 16 || i == 17 || i == 19) {
+                c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);
+                this.linea.add(c);
+            } else if (i == 21 || i == 23 || i == 24) {
+                c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);
+                this.linea.add(c);
+            } else if (i == 26 || i == 27 || i == 29) {
+                c = new Casillas(300, i, false, 100, imgCeldaNaranja, 150);
+                this.linea.add(c);
+            } else if (i == 31 || i == 32 || i == 34) {
+                c = new Casillas(350, i, false, 100, imgCeldaAmarilla, 175);
+                this.linea.add(c);
+            } else if (i == 37 || i == 39) {
+                c = new Casillas(400, i, false, 100, imgCeldaAzulOs, 200);
+                this.linea.add(c);
+            } else if (i == 10) {
+                c = new Casillas(100, i, true, 100, imgCeldaCarcel, 0);
+                this.linea.add(c);
+            } else if (i == 20) {
+                c = new Casillas(100, i, true, 100, imgCasino, 0);
+                this.linea.add(c);
+
+            } else if (i == 30) {
+                c = new Casillas(100, i, true, 100, imgCeldaPolicia, 0);
+                this.linea.add(c);
+            } else {
+                c = new Casillas(100, i, false, 100, imgCeldaVerde, 0);
                 this.linea.add(c);
             }
         }
@@ -235,10 +229,12 @@ public class EscenaJuego extends Escena {
 //            this.linea.add(c2);
 //        }
 
-        esquina = new Casillas(100, 8,false, 100, imgCeldaSalida, 0);
+        esquina = new Casillas(100, 8, false, 100, imgCeldaSalida, 0);
 
     }
+
     Movimiento mov = new Movimiento(1, context, anchoPantalla, altoPantalla);
+
     /**
      * Método dibujar en el que muestro por pantalla todos los elementos de la escena, realizo una creación dinámica del tablero y llamo a las funciones que organizan el movimiento
      * de los personajes y el funcionamiento del juego
@@ -295,237 +291,256 @@ public class EscenaJuego extends Escena {
 
         }
         //Log.i("NOES","POSICION: " + posVertPlayer1);
-        turnoPlayer1();
-        turnoPlayer2();
-        if(alacarcel){
-            c.drawText("A la carcel!! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+//        turnoPlayer1();
+//        turnoPlayer2();
+
+        if (jugador1.isTengoTurno()) {
+            if (player1turn) {
+                jugador1.turnoJugador(numAle);
+                jugador1.setDinero(casillasEspecialesPlayer(jugador1, jugador1.getPosicion()));
+                pagarCasillaJugador(jugador1.getPosicion(), jugador1, jugador2);
+                player1turn = false;
+            }
+        } else {
+            if (player1turn) {
+                jugador2.turnoJugador(numAle);
+                jugador2.setDinero(casillasEspecialesPlayer(jugador2, jugador2.getPosicion()));
+                pagarCasillaJugador(jugador2.getPosicion(), jugador2, jugador1);
+                player1turn = false;
+            }
+        }
+        if (alacarcel) {
+            c.drawText("A la carcel!! ", anchoPantalla / 3, altoPantalla - getPixels(70), pDinero);
             //alacarcel = false;
         }
-        if(entrando){
-            c.drawText("Sumas 200€ !! ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+        if (entrando) {
+            c.drawText("Sumas 200€ !! ", anchoPantalla / 3, altoPantalla - getPixels(70), pDinero);
             //entrando = false;
         }
-        if(ganandoDinero){
-            Log.i("BOOLEANA","BOOLEANA"+ ganandoDinero);
-            c.drawText("Sumas 50€ :) ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
+        if (ganandoDinero) {
+            Log.i("BOOLEANA", "BOOLEANA" + ganandoDinero);
+            c.drawText("Sumas 50€ :) ", anchoPantalla / 3, altoPantalla - getPixels(70), pDinero);
             //ganandoDinero = false;
         }
-        if(perdiendoDinero){
-            c.drawText("Pierdes 50€ :( ", anchoPantalla/3, altoPantalla - getPixels(70), pDinero);
-           // perdiendoDinero = false;
+        if (perdiendoDinero) {
+            c.drawText("Pierdes 50€ :( ", anchoPantalla / 3, altoPantalla - getPixels(70), pDinero);
+            // perdiendoDinero = false;
         }
-        if(jugador1.getDinero() <= 0){
-            c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla/5, altoPantalla - getPixels(70), pDinero);
+        if (jugador1.getDinero() <= 0) {
+            c.drawText("¡¡¡ Ha ganado el Jugador 2 !!!", anchoPantalla / 5, altoPantalla - getPixels(70), pDinero);
             gameOver = true;
         }
-        if(jugador2.getDinero() <= 0){
-            c.drawText("¡¡¡ Ha ganado el Jugador 1 !!!", anchoPantalla/5, altoPantalla - getPixels(70), pDinero);
+        if (jugador2.getDinero() <= 0) {
+            c.drawText("¡¡¡ Ha ganado el Jugador 1 !!!", anchoPantalla / 5, altoPantalla - getPixels(70), pDinero);
             gameOver = true;
         }
-        c.drawBitmap(player1, posHorizPlayer1, posVertPlayer1, null);
-        c.drawBitmap(player2, posHorizPlayer2, posVertPlayer2, null);
+        c.drawBitmap(jugador1.getImagen(), jugador1.getPosHorizPlayer(), jugador1.getPosVertPlayer(), null);
+        c.drawBitmap(jugador2.getImagen(), jugador2.getPosHorizPlayer(), jugador2.getPosVertPlayer(), null);
 
     }
     /**
      * Método llemarMeta el cual suma 200€ al jugador correspondiente cuando llega a la casilla principal.
      */
 
-    public void llegarMeta(){
-        if(jugador1.isTengoTurno()) {
-            if (casillaPlayer1 > (casillaPlayer1 + numAle) % 40) {
-                jugador1.setDinero(jugador1.getDinero() + 200);
-                entrando = true;
-                //Log.i("DENTRO IF 1", "Casilla: " + casillaPlayer1 + " de: " + linea.size());
-            }
-        }
-        else {
-            if (casillaPlayer2 > (casillaPlayer2 + numAle) % 40) {
-                jugador2.setDinero(jugador2.getDinero() + 200);
-                entrando = true;
-                //Log.i("DENTRO IF 2", "Casilla: " + casillaPlayer2 + " de: " + linea.size());
-            }
-        }
-    }
+//    public void llegarMeta(){
+//        if(jugador1.isTengoTurno()) {
+//            if (casillaPlayer1 > (casillaPlayer1 + numAle) % 40) {
+//                jugador1.setDinero(jugador1.getDinero() + 200);
+//                entrando = true;
+//            }
+//        }
+//        else {
+//            if (casillaPlayer2 > (casillaPlayer2 + numAle) % 40) {
+//                jugador2.setDinero(jugador2.getDinero() + 200);
+//                entrando = true;
+//                //Log.i("DENTRO IF 2", "Casilla: " + casillaPlayer2 + " de: " + linea.size());
+//            }
+//        }
+//    }
 
     /**
      *Método turnoPLayer1 que organiza el movimiento del jugador 1
      */
-    public void turnoPlayer1(){
-        if (jugador1.isTengoTurno())
-        {
-            if (player1turn) {
-                if (dVertical) {
-                    if (subir) {
-                        posVertPlayer1 -= mov.mover(numAle);
-                    } else {
-                        posVertPlayer1 += mov.mover(numAle);
-                    }
-                } else {
-                    if (subir) {
-                        posHorizPlayer1 -= mov.mover(numAle);
-                    } else {
-                        posHorizPlayer1 += mov.mover(numAle);
-                    }
-                }
-                llegarMeta();
+//    public void turnoPlayer1(){
+//        if (jugador1.isTengoTurno())
+//        {
+//            if (player1turn) {
+//                if (dVertical) {
+//                    if (subir) {
+//                        posVertPlayer1 -= mov.mover(numAle);
+//                    } else {
+//                        posVertPlayer1 += mov.mover(numAle);
+//                    }
+//                } else {
+//                    if (subir) {
+//                        posHorizPlayer1 -= mov.mover(numAle);
+//                    } else {
+//                        posHorizPlayer1 += mov.mover(numAle);
+//                    }
+//                }
+//                llegarMeta();
+//
+//                casillaPlayer1 = (casillaPlayer1 + numAle) % 40;
+//
+//                if (cambiarPosicion(casillaPlayer1)) {
+//                    casillaPlayer1 = (10) % 40;
+//                    //casillaPlayer1 = (casillaPlayer1 + 3) % 40;
+//                    if (dVertical) {
+//                        if (subir) {
+//                            posVertPlayer1 -= mov.mover(20);
+//                        } else {
+//                            posVertPlayer1 += mov.mover(20);
+//                        }
+//                    } else {
+//                        if (subir) {
+//                            posHorizPlayer1 -= mov.mover(20);
+//                        } else {
+//                            posHorizPlayer1 += mov.mover(20);
+//                        }
+//                    }
+//                }
+//                player1turn = false;
+//            }
+//            if (posVertPlayer1 <= getPixels(110) && posHorizPlayer1 <= getPixels(35)) {
+//                dVertical = true;
+//                subir = false;
+//                posVertPlayer1 -= posHorizPlayer1 - getPixels(35);
+//                posHorizPlayer1 = getPixels(35);
+//            } else if (posVertPlayer1 >= getPixels(380) && posHorizPlayer1 <= getPixels(35)) {
+//                dVertical = false;
+//                subir = false;
+//                posHorizPlayer1 += posVertPlayer1 - getPixels(380);
+//                posVertPlayer1 = getPixels(380);
+//            } else if (posVertPlayer1 >= getPixels(380) && posHorizPlayer1 >= getPixels(305)) {
+//                dVertical = true;
+//                subir = true;
+//                posVertPlayer1 -= posHorizPlayer1 - getPixels(305);
+//                posHorizPlayer1 = getPixels(305);
+//            } else if (posVertPlayer1 <= getPixels(110) && posHorizPlayer1 >= getPixels(305)) {
+//                dVertical = false;
+//                subir = true;
+//                posHorizPlayer1 += posVertPlayer1 - getPixels(110);
+//                posVertPlayer1 = getPixels(110);
+//            }
+//            pagarCasillaJugador(casillaPlayer1, jugador1, jugador2);
+//            casillasEspecialesPlayer(jugador1, casillaPlayer1);
+//        }
+//    }
+//    /**
+//     * Método turnoPlayer2 que organiza el movimiento del jugador 2
+//     */
+//    public void turnoPlayer2(){
+//        if (jugador2.isTengoTurno())
+//        {
+//            if (player1turn) {
+//                if (dVerticalPlayer2) {
+//                    if (subirPlayer2) {
+//                        posVertPlayer2 -= mov.mover(numAle);
+//                    } else {
+//                        posVertPlayer2 += mov.mover(numAle);
+//                    }
+//                } else {
+//                    if (subirPlayer2) {
+//                        posHorizPlayer2 -= mov.mover(numAle);
+//                    } else {
+//                        posHorizPlayer2 += mov.mover(numAle);
+//                    }
+//                }
+//                llegarMeta();
+//                //casillasEspecialesPlayer2();
+//                casillaPlayer2 = (casillaPlayer2 + numAle) % 40;
+//                if (cambiarPosicion(casillaPlayer2)) {
+//                    casillaPlayer2 = (10) % 40;
+//                    if (dVerticalPlayer2) {
+//                        if (subirPlayer2) {
+//                            posVertPlayer2 -= mov.mover(20);
+//                        } else {
+//                            posVertPlayer2 += mov.mover(20);
+//                        }
+//                    } else {
+//                        if (subirPlayer2) {
+//                            posHorizPlayer2 -= mov.mover(20);
+//                        } else {
+//                            posHorizPlayer2 += mov.mover(20);
+//                        }
+//                    }
+//                }
+//                player1turn = false;
+//            }
+//            if (posVertPlayer2 <= getPixels(110) && posHorizPlayer2 <= getPixels(35)) {
+//                dVerticalPlayer2 = true;
+//                subirPlayer2 = false;
+//                posVertPlayer2 -= posHorizPlayer2 - getPixels(35);
+//                posHorizPlayer2 = getPixels(35);
+//            } else if (posVertPlayer2 >= getPixels(380) && posHorizPlayer2 <= getPixels(35)) {
+//                dVerticalPlayer2 = false;
+//                subirPlayer2 = false;
+//                posHorizPlayer2 += posVertPlayer2 - getPixels(380);
+//                posVertPlayer2 = getPixels(380);
+//            } else if (posVertPlayer2 >= getPixels(380) && posHorizPlayer2 >= getPixels(305)) {
+//                dVerticalPlayer2 = true;
+//                subirPlayer2 = true;
+//                posVertPlayer2 -= posHorizPlayer2 - getPixels(305);
+//                posHorizPlayer2 = getPixels(305);
+//            } else if (posVertPlayer2 <= getPixels(110) && posHorizPlayer2 >= getPixels(305)) {
+//                dVerticalPlayer2 = false;
+//                subirPlayer2 = true;
+//                posHorizPlayer2 += posVertPlayer2 - getPixels(110);
+//                posVertPlayer2 = getPixels(110);
+//            }
+//            pagarCasillaJugador(casillaPlayer2, jugador2, jugador1);
+//            casillasEspecialesPlayer(jugador2, casillaPlayer2);
+//            //Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueno());
+//        }
+//    }
 
-                casillaPlayer1 = (casillaPlayer1 + numAle) % 40;
-
-                if (cambiarPosicion(casillaPlayer1)) {
-                    casillaPlayer1 = (10) % 40;
-                    //casillaPlayer1 = (casillaPlayer1 + 3) % 40;
-                    if (dVertical) {
-                        if (subir) {
-                            posVertPlayer1 -= mov.mover(20);
-                        } else {
-                            posVertPlayer1 += mov.mover(20);
-                        }
-                    } else {
-                        if (subir) {
-                            posHorizPlayer1 -= mov.mover(20);
-                        } else {
-                            posHorizPlayer1 += mov.mover(20);
-                        }
-                    }
-                }
-                player1turn = false;
-            }
-            if (posVertPlayer1 <= getPixels(110) && posHorizPlayer1 <= getPixels(35)) {
-                dVertical = true;
-                subir = false;
-                posVertPlayer1 -= posHorizPlayer1 - getPixels(35);
-                posHorizPlayer1 = getPixels(35);
-            } else if (posVertPlayer1 >= getPixels(380) && posHorizPlayer1 <= getPixels(35)) {
-                dVertical = false;
-                subir = false;
-                posHorizPlayer1 += posVertPlayer1 - getPixels(380);
-                posVertPlayer1 = getPixels(380);
-            } else if (posVertPlayer1 >= getPixels(380) && posHorizPlayer1 >= getPixels(305)) {
-                dVertical = true;
-                subir = true;
-                posVertPlayer1 -= posHorizPlayer1 - getPixels(305);
-                posHorizPlayer1 = getPixels(305);
-            } else if (posVertPlayer1 <= getPixels(110) && posHorizPlayer1 >= getPixels(305)) {
-                dVertical = false;
-                subir = true;
-                posHorizPlayer1 += posVertPlayer1 - getPixels(110);
-                posVertPlayer1 = getPixels(110);
-            }
-            pagarCasillaJugador(casillaPlayer1, jugador1, jugador2);
-            casillasEspecialesPlayer(jugador1, casillaPlayer1);
-        }
-    }
-    /**
-     * Método turnoPlayer2 que organiza el movimiento del jugador 2
-     */
-    public void turnoPlayer2(){
-        if (jugador2.isTengoTurno())
-        {
-            if (player1turn) {
-                if (dVerticalPlayer2) {
-                    if (subirPlayer2) {
-                        posVertPlayer2 -= mov.mover(numAle);
-                    } else {
-                        posVertPlayer2 += mov.mover(numAle);
-                    }
-                } else {
-                    if (subirPlayer2) {
-                        posHorizPlayer2 -= mov.mover(numAle);
-                    } else {
-                        posHorizPlayer2 += mov.mover(numAle);
-                    }
-                }
-                llegarMeta();
-                //casillasEspecialesPlayer2();
-                casillaPlayer2 = (casillaPlayer2 + numAle) % 40;
-                if (cambiarPosicion(casillaPlayer2)) {
-                    casillaPlayer2 = (10) % 40;
-                    if (dVerticalPlayer2) {
-                        if (subirPlayer2) {
-                            posVertPlayer2 -= mov.mover(20);
-                        } else {
-                            posVertPlayer2 += mov.mover(20);
-                        }
-                    } else {
-                        if (subirPlayer2) {
-                            posHorizPlayer2 -= mov.mover(20);
-                        } else {
-                            posHorizPlayer2 += mov.mover(20);
-                        }
-                    }
-                }
-                player1turn = false;
-            }
-            if (posVertPlayer2 <= getPixels(110) && posHorizPlayer2 <= getPixels(35)) {
-                dVerticalPlayer2 = true;
-                subirPlayer2 = false;
-                posVertPlayer2 -= posHorizPlayer2 - getPixels(35);
-                posHorizPlayer2 = getPixels(35);
-            } else if (posVertPlayer2 >= getPixels(380) && posHorizPlayer2 <= getPixels(35)) {
-                dVerticalPlayer2 = false;
-                subirPlayer2 = false;
-                posHorizPlayer2 += posVertPlayer2 - getPixels(380);
-                posVertPlayer2 = getPixels(380);
-            } else if (posVertPlayer2 >= getPixels(380) && posHorizPlayer2 >= getPixels(305)) {
-                dVerticalPlayer2 = true;
-                subirPlayer2 = true;
-                posVertPlayer2 -= posHorizPlayer2 - getPixels(305);
-                posHorizPlayer2 = getPixels(305);
-            } else if (posVertPlayer2 <= getPixels(110) && posHorizPlayer2 >= getPixels(305)) {
-                dVerticalPlayer2 = false;
-                subirPlayer2 = true;
-                posHorizPlayer2 += posVertPlayer2 - getPixels(110);
-                posVertPlayer2 = getPixels(110);
-            }
-            pagarCasillaJugador(casillaPlayer2, jugador2, jugador1);
-            casillasEspecialesPlayer(jugador2, casillaPlayer2);
-            //Log.i("DUEÑO","TURNOJUGADOR2" + this.linea.get(casillaPlayer2).getDueno());
-        }
-    }
     /**
      * Método casillasEspecialesPlayer1 que determina las casillas especiales y realiza la correspondiente acción cuando el jugador 1 cae en una.
-     * */
-    public void casillasEspecialesPlayer(Jugador j, int casillaPlayer){
-        if(casillaPlayer == 2 || casillaPlayer == 5 || casillaPlayer == 15 || casillaPlayer == 18 || casillaPlayer == 25 || casillaPlayer == 35 || casillaPlayer == 38){
-            if(trebol_gato == 0) {
-                j.setDinero(j.getDinero() + 50);
+     */
+    public int casillasEspecialesPlayer(Jugador j, int casillaPlayer) {
+        int dinero = j.getDinero();
+        if (casillaPlayer == 2 || casillaPlayer == 5 || casillaPlayer == 15 || casillaPlayer == 18 || casillaPlayer == 25 || casillaPlayer == 35 || casillaPlayer == 38) {
+            if (trebol_gato == 0) {
+                dinero += 50;
                 ganandoDinero = true;
                 trebol_gato++;
             }
         }
-        if(casillaPlayer == 4 || casillaPlayer == 7 || casillaPlayer == 13 || casillaPlayer == 22 || casillaPlayer == 28 || casillaPlayer == 33 || casillaPlayer == 36){
-            if(trebol_gato == 0) {
-                j.setDinero(j.getDinero() - 50);
+        if (casillaPlayer == 4 || casillaPlayer == 7 || casillaPlayer == 13 || casillaPlayer == 22 || casillaPlayer == 28 || casillaPlayer == 33 || casillaPlayer == 36) {
+            if (trebol_gato == 0) {
+                dinero -= 50;
                 perdiendoDinero = true;
-                trebol_gato ++;
+                trebol_gato++;
             }
         }
+        return dinero;
     }
 
-    /**
-     * Método cambiar posición que indica si el jugador 1 ha caído en la carcel
-     * Return: boolean
-     * */
-    public boolean cambiarPosicion(int casillaPlayer){
-        if(casillaPlayer == 30){
-            alacarcel = true;
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * Método cambiar posición que indica si el jugador 1 ha caído en la carcel
+//     * Return: boolean
+//     * */
+//    public boolean cambiarPosicion(int casillaPlayer){
+//        if(casillaPlayer == 30){
+//            alacarcel = true;
+//            return true;
+//        }
+//        return false;
+//    }
+
     /**
      * Método numDados que devuelve un número aleatorio entre 1 y 12, en el que se basará el movimiento de los jugadores en cuanto al lanzamiento de dado.
+     *
      * @return : int.
-     * */
-    public int numDados(){
-        if(conDados) {
+     */
+    public int numDados() {
+        if (conDados) {
             alacarcel = false;
             entrando = false;
             ganandoDinero = false;
             perdiendoDinero = false;
             return (int) (Math.random() * (12 + 1) - 1) + 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -545,7 +560,7 @@ public class EscenaJuego extends Escena {
      */
     public int onTouchEvent(MotionEvent event) {
         //Llama al control de pulsaciones de la clase padre
-        int nuevaEscena=super.onTouchEvent(event);
+        int nuevaEscena = super.onTouchEvent(event);
         int accion = event.getAction();
 
         switch (accion) {
@@ -560,7 +575,7 @@ public class EscenaJuego extends Escena {
                     return 1;
                 }
                 if (rectDados.contains((int) event.getX(), (int) event.getY())) {
-                    if(!gameOver) {
+                    if (!gameOver) {
                         tirarDados = true;
                         numAle = numDados();
                         conDados = false;
@@ -570,7 +585,7 @@ public class EscenaJuego extends Escena {
                     }
                 }
                 if (rectTurno.contains((int) event.getX(), (int) event.getY())) {
-                    if(!gameOver) {
+                    if (!gameOver) {
                         numAle = 0;
                         conDados = true;
                         if (jugador1.isTengoTurno()) {
@@ -594,7 +609,7 @@ public class EscenaJuego extends Escena {
                 break;
         }
 
-        if(nuevaEscena!=numEscena){
+        if (nuevaEscena != numEscena) {
             return nuevaEscena;
         }
         return numEscena;
@@ -602,27 +617,29 @@ public class EscenaJuego extends Escena {
 
     /**
      * Método comprarCasilla que permite a los jugadores comprar una casilla, siempre que esta no tenga dueno
+     *
      * @param j
      * @param posicion
      */
-    public void comprarCasilla(Jugador j, int posicion){
-        if(this.linea.get(posicion).getDueno() == null){
+    public void comprarCasilla(Jugador j, int posicion) {
+        if (this.linea.get(posicion).getDueno() == null) {
             this.linea.get(posicion).setDueno(j);
-            j.setDinero(j.getDinero()-this.linea.get(posicion).getPrecio());
+            j.setDinero(j.getDinero() - this.linea.get(posicion).getPrecio());
         }
     }
 
     /**
      * Método pagarCasillaJugador1 que maneja las acciones cuando el jugador 1 cae en una casilla en la que el dueno es el jugador 2
+     *
      * @param posicion
      */
-    public void pagarCasillaJugador(int posicion, Jugador j, Jugador jOtro){
-        if(llervarseDinero == 0) {
+    public void pagarCasillaJugador(int posicion, Jugador j, Jugador jOtro) {
+        if (llervarseDinero == 0) {
             if (this.linea.get(posicion).getDueno() == j) {
                 j.setDinero(j.getDinero() - this.linea.get(posicion).getCobrar());
                 jOtro.setDinero(jOtro.getDinero() + this.linea.get(posicion).getCobrar());
             }
-            llervarseDinero ++;
+            llervarseDinero++;
         }
     }
 }
