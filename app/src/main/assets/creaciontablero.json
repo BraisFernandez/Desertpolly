@@ -1,81 +1,81 @@
 [
-	{"precio": 200, "numero": 0, "especiales":"true", "tamano":100, "imgCelda":"imgCeldaSalida", "cobrar":0},
+	{"precio": 200, "numero": 0, "especiales":"true", "tamano":100, "imgCelda":"celdasalida", "cobrar":0},
 
-	{"precio": 100, "numero": 1, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaVerde", "cobrar":25},
+	{"precio": 100, "numero": 1, "especiales":"false", "tamano":100, "imgCelda":"celdapeque", "cobrar":25},
 
-	{"precio": 0, "numero": 2, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+	{"precio": 0, "numero": 2, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
-	{"precio": 100, "numero": 3, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaVerde", "cobrar":25},
+	{"precio": 100, "numero": 3, "especiales":"false", "tamano":100, "imgCelda":"celdapeque", "cobrar":25},
 
-	{"precio": 0, "numero": 4, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+	{"precio": 0, "numero": 4, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
- 	{"precio": 0, "numero": 5, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 5, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
- 	{"precio": 150, "numero": 6, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRoja", "cobrar":50},
+ 	{"precio": 150, "numero": 6, "especiales":"false", "tamano":100, "imgCelda":"celdaroja", "cobrar":50},
 
-	{"precio": 0, "numero": 7, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+	{"precio": 0, "numero": 7, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
-	{"precio": 150, "numero": 8, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRoja", "cobrar":50},
+	{"precio": 150, "numero": 8, "especiales":"false", "tamano":100, "imgCelda":"celdaroja", "cobrar":50},
 
-	{"precio": 150, "numero": 9, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRoja", "cobrar":50},
+	{"precio": 150, "numero": 9, "especiales":"false", "tamano":100, "imgCelda":"celdaroja", "cobrar":50},
 
- 	{"precio": 0, "numero": 10, "especiales":"true", "tamano":100, "imgCelda":"imgCeldaCarcel", "cobrar":0},
+ 	{"precio": 0, "numero": 10, "especiales":"true", "tamano":100, "imgCelda":"celdacarcel", "cobrar":0},
 
-	{"precio": 200, "numero": 11, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRosa", "cobrar":75},
+	{"precio": 200, "numero": 11, "especiales":"false", "tamano":100, "imgCelda":"celdarosa", "cobrar":75},
 
-	{"precio": 200, "numero": 12, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRosa", "cobrar":75},
+	{"precio": 200, "numero": 12, "especiales":"false", "tamano":100, "imgCelda":"celdarosa", "cobrar":75},
 
-	{"precio": 0, "numero": 13, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+	{"precio": 0, "numero": 13, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
-	{"precio": 200, "numero": 14, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaRosa", "cobrar":75},
+	{"precio": 200, "numero": 14, "especiales":"false", "tamano":100, "imgCelda":"celdarosa", "cobrar":75},
 
- 	{"precio": 0, "numero": 15, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 15, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
- 	{"precio": 250, "numero": 16, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaMarron", "cobrar":100},
+ 	{"precio": 250, "numero": 16, "especiales":"false", "tamano":100, "imgCelda":"celdamarron", "cobrar":100},
 
- 	{"precio": 250, "numero": 17, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaMarron", "cobrar":100},
+ 	{"precio": 250, "numero": 17, "especiales":"false", "tamano":100, "imgCelda":"celdamarron", "cobrar":100},
 
- 	{"precio": 0, "numero": 18, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 18, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
-	{"precio": 250, "numero": 19, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaMarron", "cobrar":100},
+	{"precio": 250, "numero": 19, "especiales":"false", "tamano":100, "imgCelda":"celdamarron", "cobrar":100},
 
-	{"precio": 0, "numero": 20, "especiales":"true", "tamano":100, "imgCelda":"imgCasino", "cobrar":0},
+	{"precio": 0, "numero": 20, "especiales":"true", "tamano":100, "imgCelda":"celdacasino", "cobrar":0},
 
-	{"precio": 300, "numero": 21, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAzulCl", "cobrar":125},
+	{"precio": 300, "numero": 21, "especiales":"false", "tamano":100, "imgCelda":"celdaazulclaro", "cobrar":125},
 
- 	{"precio": 0, "numero": 22, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+ 	{"precio": 0, "numero": 22, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
- 	{"precio": 300, "numero": 23, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAzulCl", "cobrar":125},
+ 	{"precio": 300, "numero": 23, "especiales":"false", "tamano":100, "imgCelda":"celdaazulclaro", "cobrar":125},
 
- 	{"precio": 300, "numero": 24, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAzulCl", "cobrar":125},
+ 	{"precio": 300, "numero": 24, "especiales":"false", "tamano":100, "imgCelda":"celdaazulclaro", "cobrar":125},
 
- 	{"precio": 0, "numero": 25, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 25, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
-	{"precio": 350, "numero": 26, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaNaranja", "cobrar":150},
+	{"precio": 350, "numero": 26, "especiales":"false", "tamano":100, "imgCelda":"celdanaranja", "cobrar":150},
 
-	{"precio": 350, "numero": 27, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaNaranja", "cobrar":150},
+	{"precio": 350, "numero": 27, "especiales":"false", "tamano":100, "imgCelda":"celdanaranja", "cobrar":150},
 
- 	{"precio": 0, "numero": 28, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+ 	{"precio": 0, "numero": 28, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
- 	{"precio": 350, "numero": 29, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaNaranja", "cobrar":150},
+ 	{"precio": 350, "numero": 29, "especiales":"false", "tamano":100, "imgCelda":"celdanaranja", "cobrar":150},
 
- 	{"precio": 0, "numero": 30, "especiales":"true", "tamano":100, "imgCelda":"imgCeldaPolicia", "cobrar":0},
+ 	{"precio": 0, "numero": 30, "especiales":"true", "tamano":100, "imgCelda":"celdapolicia", "cobrar":0},
 
- 	{"precio": 400, "numero": 31, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAmarilla", "cobrar":175},
+ 	{"precio": 400, "numero": 31, "especiales":"false", "tamano":100, "imgCelda":"celdaamarilla", "cobrar":175},
 
- 	{"precio": 400, "numero": 32, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAmarilla", "cobrar":175},
+ 	{"precio": 400, "numero": 32, "especiales":"false", "tamano":100, "imgCelda":"celdaamarilla", "cobrar":175},
 
- 	{"precio": 0, "numero": 33, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+ 	{"precio": 0, "numero": 33, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
- 	{"precio": 400, "numero": 34, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAmarilla", "cobrar":175},
+ 	{"precio": 400, "numero": 34, "especiales":"false", "tamano":100, "imgCelda":"celdaamarilla", "cobrar":175},
 
- 	{"precio": 0, "numero": 35, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 35, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
- 	{"precio": 0, "numero": 36, "especiales":"true", "tamano":100, "imgCelda":"imgGatito", "cobrar":0},
+ 	{"precio": 0, "numero": 36, "especiales":"true", "tamano":100, "imgCelda":"celdagatito", "cobrar":0},
 
- 	{"precio": 450, "numero": 37, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAzulOs", "cobrar":200},
+ 	{"precio": 450, "numero": 37, "especiales":"false", "tamano":100, "imgCelda":"celdaazuloscuro", "cobrar":200},
 
- 	{"precio": 0, "numero": 38, "especiales":"true", "tamano":100, "imgCelda":"imgTrebol", "cobrar":0},
+ 	{"precio": 0, "numero": 38, "especiales":"true", "tamano":100, "imgCelda":"casillatrebol", "cobrar":0},
 
- 	{"precio": 450, "numero": 39, "especiales":"false", "tamano":100, "imgCelda":"imgCeldaAzulOs", "cobrar":200}
+ 	{"precio": 450, "numero": 39, "especiales":"false", "tamano":100, "imgCelda":"celdaazuloscuro", "cobrar":200}
  ] 

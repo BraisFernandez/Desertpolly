@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
@@ -96,136 +97,25 @@ public class EscenaJuego extends Escena {
         this.jugador1 = new Jugador(player1, 1000, true, context);
         this.jugador2 = new Jugador(player2, 1000, false, context);
 
-        imgCeldaSalida = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdasalida);
-        imgCeldaSalida = Bitmap.createBitmap(imgCeldaSalida);
-        imgCeldaSalida = Bitmap.createScaledBitmap(imgCeldaSalida, getPixels(50), getPixels(50), true);
-
-        Casillas salida = new Casillas(200, 0, true, 100, imgCeldaSalida, 0);
-        this.linea.add(salida);
-
-        imgTrebol = BitmapFactory.decodeResource(context.getResources(), R.drawable.casillatrebol);
-        imgTrebol = Bitmap.createBitmap(imgTrebol);
-        imgTrebol = Bitmap.createScaledBitmap(imgTrebol, getPixels(50), getPixels(27), true);
-
-        imgCeldaVerde = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdapeque);
-        imgCeldaVerde = Bitmap.createBitmap(imgCeldaVerde);
-        imgCeldaVerde = Bitmap.createScaledBitmap(imgCeldaVerde, getPixels(50), getPixels(27), true);
-
-        imgGatito = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdagatito);
-        imgGatito = Bitmap.createBitmap(imgGatito);
-        imgGatito = Bitmap.createScaledBitmap(imgGatito, getPixels(50), getPixels(27), true);
-
-        imgCeldaRoja = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdaroja);
-        imgCeldaRoja = Bitmap.createBitmap(imgCeldaRoja);
-        imgCeldaRoja = Bitmap.createScaledBitmap(imgCeldaRoja, getPixels(50), getPixels(27), true);
-
-        imgCeldaRosa = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdarosa);
-        imgCeldaRosa = Bitmap.createBitmap(imgCeldaRosa);
-        imgCeldaRosa = Bitmap.createScaledBitmap(imgCeldaRosa, getPixels(50), getPixels(27), true);
-
-        imgCeldaMarron = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdamarron);
-        imgCeldaMarron = Bitmap.createBitmap(imgCeldaMarron);
-        imgCeldaMarron = Bitmap.createScaledBitmap(imgCeldaMarron, getPixels(50), getPixels(27), true);
-
-        imgCeldaAzulCl = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdaazulclaro);
-        imgCeldaAzulCl = Bitmap.createBitmap(imgCeldaAzulCl);
-        imgCeldaAzulCl = Bitmap.createScaledBitmap(imgCeldaAzulCl, getPixels(50), getPixels(27), true);
-
-        imgCeldaNaranja = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdanaranja);
-        imgCeldaNaranja = Bitmap.createBitmap(imgCeldaNaranja);
-        imgCeldaNaranja = Bitmap.createScaledBitmap(imgCeldaNaranja, getPixels(50), getPixels(27), true);
-
-        imgCeldaAmarilla = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdaamarilla);
-        imgCeldaAmarilla = Bitmap.createBitmap(imgCeldaAmarilla);
-        imgCeldaAmarilla = Bitmap.createScaledBitmap(imgCeldaAmarilla, getPixels(50), getPixels(27), true);
-
-        imgCeldaAzulOs = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdaazuloscuro);
-        imgCeldaAzulOs = Bitmap.createBitmap(imgCeldaAzulOs);
-        imgCeldaAzulOs = Bitmap.createScaledBitmap(imgCeldaAzulOs, getPixels(50), getPixels(27), true);
-
-        imgCasino = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdacasino);
-        imgCasino = Bitmap.createBitmap(imgCasino);
-        imgCasino = Bitmap.createScaledBitmap(imgCasino, getPixels(50), getPixels(50), true);
-
-        imgCeldaCarcel = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdacarcel);
-        imgCeldaCarcel = Bitmap.createBitmap(imgCeldaCarcel);
-        imgCeldaCarcel = Bitmap.createScaledBitmap(imgCeldaCarcel, getPixels(50), getPixels(50), true);
-
-        imgCeldaPolicia = BitmapFactory.decodeResource(context.getResources(), R.drawable.celdagrande);
-        imgCeldaPolicia = Bitmap.createBitmap(imgCeldaPolicia);
-        imgCeldaPolicia = Bitmap.createScaledBitmap(imgCeldaPolicia, getPixels(50), getPixels(50), true);
-
-
-//        for (int i = 1; i < 40; i++) {
-//            if (i == 1 || i == 3) {
-//                c = new Casillas(100, i, false, 100, imgCeldaVerde, 25);
-//                this.linea.add(c);
-//            } else if (i == 2 || i == 5 || i == 15 || i == 18 || i == 25 || i == 35 || i == 38) {
-//                c = new Casillas(0, i, true, 100, imgTrebol, 0);
-//                this.linea.add(c);
-//            } else if (i == 4 || i == 7 || i == 13 || i == 22 || i == 28 || i == 33 || i == 36) {
-//                c = new Casillas(0, i, true, 100, imgGatito, 0);
-//                this.linea.add(c);
-//            } else if (i == 6 || i == 8 || i == 9) {
-//                c = new Casillas(150, i, false, 100, imgCeldaRoja, 50);
-//                this.linea.add(c);
-//            } else if (i == 11 || i == 12 || i == 14) {
-//                c = new Casillas(200, i, false, 100, imgCeldaRosa, 75);
-//                this.linea.add(c);
-//            } else if (i == 16 || i == 17 || i == 19) {
-//                c = new Casillas(250, i, false, 100, imgCeldaMarron, 100);
-//                this.linea.add(c);
-//            } else if (i == 21 || i == 23 || i == 24) {
-//                c = new Casillas(300, i, false, 100, imgCeldaAzulCl, 125);
-//                this.linea.add(c);
-//            } else if (i == 26 || i == 27 || i == 29) {
-//                c = new Casillas(350, i, false, 100, imgCeldaNaranja, 150);
-//                this.linea.add(c);
-//            } else if (i == 31 || i == 32 || i == 34) {
-//                c = new Casillas(400, i, false, 100, imgCeldaAmarilla, 175);
-//                this.linea.add(c);
-//            } else if (i == 37 || i == 39) {
-//                c = new Casillas(450, i, false, 100, imgCeldaAzulOs, 200);
-//                this.linea.add(c);
-//            } else if (i == 10) {
-//                c = new Casillas(0, i, true, 100, imgCeldaCarcel, 0);
-//                this.linea.add(c);
-//            } else if (i == 20) {
-//                c = new Casillas(0, i, true, 100, imgCasino, 0);
-//                this.linea.add(c);
-//
-//            } else if (i == 30) {
-//                c = new Casillas(0, i, true, 100, imgCeldaPolicia, 0);
-//                this.linea.add(c);
-//            } else {
-//                c = new Casillas(100, i, false, 100, imgCeldaVerde, 0);
-//                this.linea.add(c);
-//            }
-//        }
-//        esquina = new Casillas(100, 8, false, 100, imgCeldaSalida, 0);
-
-
         try {
-            //JSONObject obj = new JSONObject(loadJSONFromAsset(context));
             JSONArray cas = new JSONArray(loadJSONFromAsset(context));
             for (int i = 0; i < cas.length(); i++) {
-                imgBucle = BitmapFactory.decodeResource(context.getResources(), R.drawable.flechamenu);
+
+                String mDrawableName = cas.getJSONObject(i).getString("imgCelda");
+                int resID = context.getResources().getIdentifier(mDrawableName , "drawable", context.getPackageName());
+                Log.i("SSSSSSSSSSSSSS","SSSSSSSSSSSS "+resID+"COntador: " +i);
+                imgBucle = BitmapFactory.decodeResource(context.getResources(), resID);
                 imgBucle = Bitmap.createBitmap(imgBucle);
-                imgBucle = Bitmap.createScaledBitmap(imgBucle, getPixels(50), getPixels(27), true);
-
-                Uri uri = Uri.parse("R.drawable."+ cas.getJSONObject(i).getString("imgCelda"));
-
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-
-
+                if(i%10 == 0){
+                    imgBucle = Bitmap.createScaledBitmap(imgBucle, getPixels(50), getPixels(50), true);
+                }else {
+                    imgBucle = Bitmap.createScaledBitmap(imgBucle, getPixels(50), getPixels(27), true);
+                }
                 c = new Casillas(cas.getJSONObject(i).getInt("precio"), cas.getJSONObject(i).getInt("numero"), cas.getJSONObject(i).getBoolean("especiales"),
-                        cas.getJSONObject(i).getInt("tamano"), imgCeldaVerde/*cas.getJSONObject(i).getString("imgCelda")*/,cas.getJSONObject(i).getInt("cobrar"));
+                        cas.getJSONObject(i).getInt("tamano"), imgBucle,cas.getJSONObject(i).getInt("cobrar"));
                 this.linea.add(c);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
             e.printStackTrace();
         }
     }
